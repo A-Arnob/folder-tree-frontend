@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import UploadService from "../services/FileUploadService";
 import { Button } from "antd";
 import { Layout, Flex } from "antd";
+import { useParams } from "react-router-dom";
 
 const { Header } = Layout;
 
@@ -24,6 +25,9 @@ interface IFile {
 }
 
 const FileUpload: React.FC = () => {
+  let { parent } = useParams();
+  
+
   const [currentFile, setCurrentFile] = useState<File>();
   // const [progress, setProgress] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
@@ -38,7 +42,7 @@ const FileUpload: React.FC = () => {
   const upload = () => {
     if (!currentFile) return;
 
-    UploadService.upload(currentFile)
+    UploadService.upload(currentFile, parent)
       .then((response) => {
         setMessage(response.data.message);
         console.log(response.data.message);
@@ -69,7 +73,7 @@ const FileUpload: React.FC = () => {
     <Header style={headerStyle}>
       <div>
         <label>
-          <p></p>
+          <p>Enter File in {parent}</p>
           <input type="file" onChange={selectFile} />
         </label>
       </div>

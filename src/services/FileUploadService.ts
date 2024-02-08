@@ -1,9 +1,16 @@
+
 import http from "../http-common";
 
-const upload = (file: File): Promise<any> => {
+const upload = (file: File, parent: string | undefined): Promise<any> => {
+
+  if (parent == undefined) {
+    parent = "mainroot";
+  }
+
   let formData = new FormData();
 
   formData.append("file", file);
+  formData.append("parent", parent);
 
   return http.post("/fileupload", formData, {
     headers: {

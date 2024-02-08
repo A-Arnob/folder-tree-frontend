@@ -9,7 +9,10 @@ import FileUpload from "./components/FileUpload";
 function App() {
   return (
     <>
-      <FileUpload />
+    <Routes>
+      <Route path="/:parent" element={<FileUpload />}></Route>
+    </Routes>
+      
       <Routes>
         <Route path="/" element={<FolderListNew3 />}></Route>
         <Route

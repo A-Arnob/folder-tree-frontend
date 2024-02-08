@@ -28,10 +28,10 @@ const Button = styled.button`
 
 const FolderLayout = styled.li`
   list-style-type: none;
-  width: 12rem;
+  width: 10rem;
   border: 1px solid;
   border-color: #757575;
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 2px 20px;
   margin-bottom: 20px;
   background-color: #e6e6e6;
@@ -96,7 +96,7 @@ function FolderListNew3() {
             }}
           >
             {/* <li> */}
-            <FolderOutlined />
+            <FolderOutlined /> {/* Folder Icon */}
             <Button>{folder.name}</Button>
             {/* </li> */}
           </FolderLayout>
