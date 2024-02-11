@@ -5,14 +5,21 @@ import FolderListNew from "./components/FolderListNew";
 import FolderListNew2 from "./components/FolderListNew2";
 import FolderListNew3 from "./components/FolderListNew3";
 import FileUpload from "./components/FileUpload";
+import HeaderContent from "./components/HeaderContent";
 
 function App() {
   return (
     <>
-    <Routes>
-      <Route path="/:parent" element={<FileUpload />}></Route>
-    </Routes>
-      
+      <Routes>
+        <Route path=":parent" element={<HeaderContent />}>
+
+        </Route>
+        <Route path="/:parent/fileupload" element={<FileUpload />}></Route>
+        <Route path="/:parent/addfolder" element={<AddFolder />}></Route>
+
+      </Routes>
+
+
       <Routes>
         <Route path="/" element={<FolderListNew3 />}></Route>
         <Route

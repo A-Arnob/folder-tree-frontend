@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import DeleteChild from "./DeleteChild";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { FolderOutlined } from "@ant-design/icons";
+import { DeleteOutlined, FolderOutlined } from "@ant-design/icons";
 
 interface Folder {
   _id: string;
@@ -11,19 +11,31 @@ interface Folder {
   parent: string;
 }
 
-const Button = styled.button`
+const Span = styled.button`
   color: black;
   margin: 10px 2px;
+  padding: 2px, 20px;
   border: none;
   background: none;
   font-size: 20px;
   font-weight: bolder;
 
-  /* &:hover {
-    background: rgb(170, 180, 223);
-    border: 1px solid #ffffff;
+`;
+
+const Button = styled.button`
+  color: black;
+  margin: 10px 2px;
+  border: 1px solid;
+  border-radius: 6px;
+  background: #fcc6d6;
+  font-size: 20px;
+  font-weight: bolder;
+
+  &:hover {
+    background: #f54f80;
+    border: 1px solid;
     border-radius: 0.2em;
-  } */
+  }
 `;
 
 const FolderLayout = styled.li`
@@ -55,6 +67,8 @@ function FolderListNew3() {
   const [currentFolders, setCurrentFolders] = useState<Folder[]>([]);
 
   const [currentFolderName, setCurrentFolderName] = useState("");
+  const [displayDelete, setDisplayDelete] = useState(false);
+  const [deleteChildName, setDeleteChildName] = useState("");
 
   async function DeleteFolder(name: string) {
     const { status } = await DeleteChild(name);
@@ -88,19 +102,27 @@ function FolderListNew3() {
         "Current Folders:" + currentFolders.map((folder) => folder.name)
       )}
       <ul>
+
         {currentFolders.map((folder) => (
+
           <FolderLayout
+            onClick={() => { setDisplayDelete(true); setDeleteChildName(folder.name) }}
             onDoubleClick={() => {
               setaaa(!aaa);
+              setDisplayDelete(false);
               navigate(`/${folder.name}`);
             }}
           >
             {/* <li> */}
             <FolderOutlined /> {/* Folder Icon */}
-            <Button>{folder.name}</Button>
+            <Span>{folder.name}</Span>
             {/* </li> */}
           </FolderLayout>
         ))}
+
+        <div style={{ textAlign: "right" }}>
+          {displayDelete && <Button onClick={() => { DeleteChild(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</Button>}
+        </div>
       </ul>
     </>
   );
