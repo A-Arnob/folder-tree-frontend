@@ -3,12 +3,20 @@ import { useState, useEffect } from "react";
 import DeleteChild from "./DeleteChild";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { DeleteOutlined, FolderOutlined } from "@ant-design/icons";
+import { DeleteOutlined, FileOutlined, FolderOutlined } from "@ant-design/icons";
+import fetchFile from "./fetchFile";
 
 interface Folder {
   _id: string;
   name: string;
   parent: string;
+}
+
+interface File {
+  name: string;
+  originalname: string;
+  parent: string;
+  path: string;
 }
 
 const Span = styled.button`
@@ -65,6 +73,7 @@ function FolderListNew3() {
   const [aaa, setaaa] = useState(false);
 
   const [currentFolders, setCurrentFolders] = useState<Folder[]>([]);
+  const [currentFiles, setCurrentFiles] = useState<File[]>([]);
 
   const [currentFolderName, setCurrentFolderName] = useState("");
   const [displayDelete, setDisplayDelete] = useState(false);
@@ -93,8 +102,30 @@ function FolderListNew3() {
         if (err instanceof CanceledError) return;
       });
 
-    return () => controller.abort();
+
+
+    return () => { controller.abort(); setDisplayDelete(false) }
   }, [aaa, parent]);
+
+  useEffect(() => {
+    console.log("Calling get...");
+    const controller = new AbortController();
+
+    axios
+      .get<File[]>(`http://localhost:8080/files/${parent}`, {
+        // params: "mainroot",
+        signal: controller.signal,
+      })
+      .then((res) => {
+        setCurrentFiles(res.data);
+      })
+      .catch((err) => {
+        if (err instanceof CanceledError) return;
+      });
+
+    return () => { controller.abort(); setDisplayDelete(false) }
+  }, [aaa, parent]);
+
 
   return (
     <>
@@ -118,6 +149,11 @@ function FolderListNew3() {
             <Span>{folder.name}</Span>
             {/* </li> */}
           </FolderLayout>
+        ))}
+
+        {currentFiles.map((file) => (
+
+          <FolderLayout onDoubleClick={() => { fetchFile(file.name) }}> <FileOutlined /> <Span>{file.originalname}</Span></FolderLayout>
         ))}
 
         <div style={{ textAlign: "right" }}>
