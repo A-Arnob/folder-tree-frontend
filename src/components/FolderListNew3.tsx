@@ -14,10 +14,10 @@ interface Folder {
 }
 
 interface File {
+  _id: string;
   name: string;
   originalname: string;
   parent: string;
-  path: string;
 }
 
 const Span = styled.button`
@@ -155,6 +155,7 @@ function FolderListNew3() {
         {currentFolders.map((folder) => (
 
           <FolderLayout
+            key={folder._id}
             onClick={() => { setDisplayDelete(true); setDeleteChildName(folder.name); setDisplayFileDelete(false) }}
             onDoubleClick={() => {
               setaaa(!aaa);
@@ -171,7 +172,7 @@ function FolderListNew3() {
 
         {currentFiles.map((file) => (
 
-          <FileLayout onClick={() => { setDeleteChildName(file.name); setDisplayDelete(false); setDisplayFileDelete(true) }} onDoubleClick={() => { fetchFile(file.name, file.originalname) }}> <FileOutlined /> <Span>{file.originalname}</Span></FileLayout>
+          <FileLayout key={file._id} onClick={() => { setDeleteChildName(file.name); setDisplayDelete(false); setDisplayFileDelete(true) }} onDoubleClick={() => { fetchFile(file.name, file.originalname) }}> <FileOutlined /> <Span>{file.originalname}</Span></FileLayout>
         ))}
 
         <div style={{ textAlign: "right" }}>
