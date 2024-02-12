@@ -15,6 +15,9 @@ function fecthFile(fileName: string, originalFileName: string) {
         link.href = fileUrl;
         // link.setAttribute('download', `${originalFileName}`); // Set the desired filename or extension
         link.download = originalFileName;
+
+        window.open(fileUrl, '_blank');
+
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

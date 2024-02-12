@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { DeleteOutlined, FileOutlined, FolderOutlined } from "@ant-design/icons";
 import fetchFile from "./fetchFile";
+import DeleteFile from "./DeleteFile";
 
 interface Folder {
   _id: string;
@@ -30,7 +31,7 @@ const Span = styled.button`
 
 `;
 
-const Button = styled.button`
+const DeleteFolderButton = styled.button`
   color: black;
   margin: 10px 2px;
   border: 1px solid;
@@ -61,6 +62,21 @@ const FolderLayout = styled.li`
   }
 `;
 
+const FileLayout = styled.li`
+  list-style-type: none;
+  width: fit-content;
+  border: 1px solid;
+  border-color: #b4b4b4;
+  border-radius: 4px;
+  padding: 2px 20px;
+  margin-bottom: 20px;
+  background-color: #f0ecec;
+
+  &:hover {
+    background-color: #a5a5a5;
+  }
+`;
+
 function FolderListNew3() {
   const navigate = useNavigate();
   let { parent } = useParams();
@@ -78,6 +94,7 @@ function FolderListNew3() {
   const [currentFolderName, setCurrentFolderName] = useState("");
   const [displayDelete, setDisplayDelete] = useState(false);
   const [deleteChildName, setDeleteChildName] = useState("");
+  const [displayFileDelete, setDisplayFileDelete] = useState(false);
 
   async function DeleteFolder(name: string) {
     const { status } = await DeleteChild(name);
@@ -137,7 +154,7 @@ function FolderListNew3() {
         {currentFolders.map((folder) => (
 
           <FolderLayout
-            onClick={() => { setDisplayDelete(true); setDeleteChildName(folder.name) }}
+            onClick={() => { setDisplayDelete(true); setDeleteChildName(folder.name); setDisplayFileDelete(false) }}
             onDoubleClick={() => {
               setaaa(!aaa);
               setDisplayDelete(false);
@@ -153,11 +170,15 @@ function FolderListNew3() {
 
         {currentFiles.map((file) => (
 
-          <FolderLayout onDoubleClick={() => { fetchFile(file.name, file.originalname) }}> <FileOutlined /> <Span>{file.originalname}</Span></FolderLayout>
+          <FileLayout onClick={() => { setDeleteChildName(file.name); setDisplayDelete(false); setDisplayFileDelete(true) }} onDoubleClick={() => { fetchFile(file.name, file.originalname) }}> <FileOutlined /> <Span>{file.originalname}</Span></FileLayout>
         ))}
 
         <div style={{ textAlign: "right" }}>
-          {displayDelete && <Button onClick={() => { DeleteChild(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</Button>}
+          {displayDelete && <DeleteFolderButton onClick={() => { DeleteChild(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</DeleteFolderButton>}
+        </div>
+
+        <div style={{ textAlign: "right" }}>
+          {displayFileDelete && <DeleteFolderButton onClick={() => { DeleteFile(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</DeleteFolderButton>}
         </div>
       </ul>
     </>
