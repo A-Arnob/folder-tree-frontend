@@ -84,7 +84,7 @@ const FileUpload = () => {
           <Button danger onClick={() => navigate(-1)}>
             Cancel
           </Button>
-          <Button type="primary" disabled={!currentFile} onClick={upload}>
+          <Button type="primary" style={{ marginLeft: "10px" }} disabled={!currentFile} onClick={upload}>
             Upload
           </Button>
         </div>

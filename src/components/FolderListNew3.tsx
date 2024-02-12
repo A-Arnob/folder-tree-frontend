@@ -153,7 +153,7 @@ function FolderListNew3() {
 
         {currentFiles.map((file) => (
 
-          <FolderLayout onDoubleClick={() => { fetchFile(file.name) }}> <FileOutlined /> <Span>{file.originalname}</Span></FolderLayout>
+          <FolderLayout onDoubleClick={() => { fetchFile(file.name, file.originalname) }}> <FileOutlined /> <Span>{file.originalname}</Span></FolderLayout>
         ))}
 
         <div style={{ textAlign: "right" }}>
