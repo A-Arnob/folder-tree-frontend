@@ -2,10 +2,32 @@ import { FormEvent, useRef, useState } from "react";
 import SendFolder from "./SendFolder";
 import "./AddFolder.css";
 import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "antd";
+import { styled } from "styled-components";
 
-// export const checkAddFolder = () => {
-//   return true;
-// };
+
+const SubmitButton = styled.button`
+  color: white;
+  margin: 10px 10px;
+  border: 1px solid blue;
+  border-radius: 6px;
+  background: #3780c4;
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+  height: 32px;
+  padding: 4px 15px;
+  
+  
+
+  &:hover {
+    background: #6a9bc9;
+    border: 1px solid blue;
+    
+    
+  }
+`;
+
+
 
 // const AddFolder = ({ ParentFolderName }: { ParentFolderName: string }) => {
 const AddFolder = () => {
@@ -52,10 +74,10 @@ const AddFolder = () => {
               <input ref={nameRef} id="name" type="text" required />
             </div>
             <div style={{ textAlign: "center", marginTop: "20px" }}>
-              <button onClick={() => setShowForm(false)}>Cancel</button>
-              <button style={{ marginLeft: "10px" }} type="submit">
+              <Button danger onClick={() => { setShowForm(false); navigate(-1) }}>Cancel</Button>
+              <SubmitButton type="submit">
                 Submit
-              </button>
+              </SubmitButton>
             </div>
           </form>
         </dialog>

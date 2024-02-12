@@ -81,6 +81,9 @@ const FileUpload = () => {
         </div>
         <div>
           {/* {currentFile && ( */}
+          <Button danger onClick={() => navigate(-1)}>
+            Cancel
+          </Button>
           <Button type="primary" disabled={!currentFile} onClick={upload}>
             Upload
           </Button>
