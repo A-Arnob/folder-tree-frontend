@@ -149,6 +149,7 @@ function FolderListNew3() {
       {console.log(
         "Current Folders:" + currentFolders.map((folder) => folder.name)
       )}
+      <header><h2 style={{ textAlign: "center" }}>{parent}</h2></header>
       <ul>
 
         {currentFolders.map((folder) => (
