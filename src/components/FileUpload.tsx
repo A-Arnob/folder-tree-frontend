@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UploadService from "../services/FileUploadService";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import { Layout, Flex } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -73,29 +73,30 @@ const FileUpload = () => {
 
   return (
     <>
-      {showFileUpload &&
-        (<dialog open>
-          <Header style={headerStyle}>
-            <div>
-              <label>
-                <p>Enter File in {parent}</p>
-                <input type="file" onChange={selectFile} />
-              </label>
-            </div>
-            <div>
-              {/* {currentFile && ( */}
-              <Button danger onClick={() => { setShowFileUpload(false); }}>
-                Cancel
-              </Button>
-              <Button type="primary" style={{ marginLeft: "10px" }} disabled={!currentFile} onClick={upload}>
-                Upload
-              </Button>
-            </div>
 
-            {message && <div>{message}</div>}
-          </Header>
-        </dialog>
-        )}
+      {/* {showFileUpload && */}
+      <Modal title="File Upload" open={showFileUpload} onOk={upload} okButtonProps={{ disabled: !currentFile }} onCancel={() => setShowFileUpload(false)}>
+
+        {/* <div style={headerStyle}> */}
+        <div>
+          <label>
+            <p>Enter File in {parent}</p>
+            <input type="file" onChange={selectFile} />
+          </label>
+        </div>
+        {/* <div>
+          <Button danger onClick={() => { setShowFileUpload(false); }}>
+            Cancel
+          </Button>
+          <Button type="primary" style={{ marginLeft: "10px" }} disabled={!currentFile} onClick={upload}>
+            Upload
+          </Button>
+        </div> */}
+
+        {message && <div>{message}</div>}
+        {/* </div> */}
+
+      </Modal>
     </>
 
   );

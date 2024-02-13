@@ -2,7 +2,7 @@ import { FormEvent, useRef, useState } from "react";
 import SendFolder from "./SendFolder";
 import "./AddFolder.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Modal, Form } from "antd";
 import { styled } from "styled-components";
 
 
@@ -15,14 +15,11 @@ const SubmitButton = styled.button`
   font-size: 14px;
   line-height: 1.5714285714285714;
   height: 32px;
-  padding: 4px 15px;
-  
-  
+  padding: 4px 15px;  
 
   &:hover {
     background: #6a9bc9;
-    border: 1px solid blue;
-    
+    border: 1px solid blue;    
     
   }
 `;
@@ -33,10 +30,12 @@ const SubmitButton = styled.button`
 const AddFolder = () => {
   const { parent } = useParams();
   const nameRef = useRef<HTMLInputElement>(null);
-  const newFolder = { name: "", parent: "" };
+  const newFolder = { name: "test", parent: "" };
   const [showForm, setShowForm] = useState(true);
+  const [showOk, setShowOk] = useState(false);
   const navigate = useNavigate();
 
+  const [form] = Form.useForm();
   let ParentFolderName = parent;
 
 
@@ -44,44 +43,66 @@ const AddFolder = () => {
     if (ParentFolderName == undefined) {
       ParentFolderName = "root";
     }
-    event.preventDefault();
-    if (nameRef.current !== null) {
-      //   console.log(nameRef.current.value);
-      newFolder.name = nameRef.current.value;
-      newFolder.parent = ParentFolderName;
+    console.log("print Name Ref: " + nameRef.current?.value);
+    event.defaultPrevented;
+
+    const trimmedNameValue = nameRef.current?.value.trim();
+
+    if (!trimmedNameValue) {
+      console.log("Returning........");
+      return;
     }
 
-    // console.log(newFolder);
+    newFolder.name = trimmedNameValue;
+    newFolder.parent = ParentFolderName;
 
     SendFolder(newFolder);
-    setShowForm(false);
+    // console.log(newFolder);
+
+
     navigate(0);
+
+    return;
+
     // checkAddFolder();
   };
 
+  function okButtonHandler() {
+    const trimmedNameValue = nameRef.current?.value.trim();
+
+    if (trimmedNameValue) {
+      setShowOk(true);
+    } else {
+
+      setShowOk(false);
+    }
+  }
+
+
   return (
     <div>
-      {showForm && (
-        <dialog id="dialog" open>
-          <form method="dialog" onSubmit={handleSubmit}>
-            <div style={{ textAlign: "center", marginTop: "10rem" }}>
-              <label
-                htmlFor="name"
-                style={{ display: "block", marginBottom: "10px" }}
-              >
-                Add Folder in {ParentFolderName}
-              </label>
-              <input ref={nameRef} id="name" type="text" required />
-            </div>
-            <div style={{ textAlign: "center", marginTop: "20px" }}>
-              <Button danger onClick={() => { setShowForm(false); }}>Cancel</Button>
-              <SubmitButton type="submit">
-                Submit
-              </SubmitButton>
-            </div>
-          </form>
-        </dialog>
-      )}
+      {/* {showForm && ( */}
+      <Modal title="Folder Add" open={showForm} onOk={form.submit} okButtonProps={{ disabled: !showOk }} onCancel={() => setShowForm(false)}>
+
+        <Form form={form} onFinish={handleSubmit}>
+          <div style={{ textAlign: "center", marginTop: "2rem", marginBottom: "1rem" }}>
+            <label
+              htmlFor="name"
+              style={{ display: "block", marginBottom: "10px" }}
+            >
+              Add Folder in {ParentFolderName}
+            </label>
+            <input ref={nameRef} id="name" type="text" name="name" onChange={okButtonHandler} required />
+          </div>
+          {/* <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <Button danger onClick={() => { setShowForm(false); }}>Cancel</Button>
+            <SubmitButton type="submit">
+              Submit
+            </SubmitButton>
+          </div> */}
+        </Form>
+      </Modal>
+
     </div>
   );
 };
