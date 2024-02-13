@@ -33,18 +33,25 @@ const Span = styled.button`
 
 const DeleteFolderButton = styled.button`
   color: black;
-  margin: 10px 2px;
-  border: 1px solid;
-  border-radius: 6px;
-  background: #fcc6d6;
+  /* margin: 8px 2px; */
+  /* border: 1px solid; */
+  /* border-radius: 6px; */
+  /* background: #fcc6d6; */
+  /* padding: 5px 2px; */
   font-size: 20px;
   font-weight: bolder;
+  background:none;
+  border: none;
 
-  &:hover {
+  /* &:hover {
     background: #f54f80;
     border: 1px solid;
     border-radius: 0.2em;
+  } */
+  &:hover{
+    cursor: pointer;
   }
+
 `;
 
 const FolderLayout = styled.li`
@@ -74,6 +81,23 @@ const FileLayout = styled.li`
 
   &:hover {
     background-color: #a5a5a5;
+  }
+`;
+
+const DialogModal = styled.dialog`
+  position: absolute;
+  top: 25px; 
+  left: 30rem; 
+  width: fit-content; 
+  height: fit-content;
+  padding: 2px 10px;
+  background: #eedee3;
+  border: 1px solid;
+  border-radius: 6px;
+
+  &:hover{
+    background: #f599bf;
+      
   }
 `;
 
@@ -175,13 +199,17 @@ function FolderListNew3() {
           <FileLayout key={file._id} onClick={() => { setDeleteChildName(file.name); setDisplayDelete(false); setDisplayFileDelete(true) }} onDoubleClick={() => { fetchFile(file.name, file.originalname) }}> <FileOutlined /> <Span>{file.originalname}</Span></FileLayout>
         ))}
 
-        <div style={{ textAlign: "right" }}>
-          {displayDelete && <DeleteFolderButton onClick={() => { DeleteChild(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</DeleteFolderButton>}
-        </div>
+        {displayDelete && <DialogModal open onClick={() => setDisplayDelete(false)} >
+          <div style={{ textAlign: "right" }}>
+            <DeleteFolderButton onClick={() => { DeleteChild(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</DeleteFolderButton>
+          </div>
+        </DialogModal>}
 
-        <div style={{ textAlign: "right" }}>
-          {displayFileDelete && <DeleteFolderButton onClick={() => { DeleteFile(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</DeleteFolderButton>}
-        </div>
+        {displayFileDelete && <DialogModal open onClick={() => setDisplayFileDelete(false)} >
+          <div style={{ textAlign: "right" }}>
+            <DeleteFolderButton onClick={() => { DeleteFile(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</DeleteFolderButton>
+          </div>
+        </DialogModal>}
       </ul>
     </>
   );
