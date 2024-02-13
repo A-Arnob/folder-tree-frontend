@@ -55,7 +55,7 @@ const AddFolder = () => {
 
     SendFolder(newFolder);
     setShowForm(false);
-    navigate(-1);
+    navigate(0);
     // checkAddFolder();
   };
 
@@ -74,7 +74,7 @@ const AddFolder = () => {
               <input ref={nameRef} id="name" type="text" required />
             </div>
             <div style={{ textAlign: "center", marginTop: "20px" }}>
-              <Button danger onClick={() => { setShowForm(false); navigate(-1) }}>Cancel</Button>
+              <Button danger onClick={() => { setShowForm(false); }}>Cancel</Button>
               <SubmitButton type="submit">
                 Submit
               </SubmitButton>

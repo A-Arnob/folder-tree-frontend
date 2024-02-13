@@ -28,6 +28,7 @@ const FileUpload = () => {
   let { parent } = useParams();
 
   const [currentFile, setCurrentFile] = useState<File>();
+  const [showFileUpload, setShowFileUpload] = useState(true);
   // const [progress, setProgress] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
   const [fileInfos, setFileInfos] = useState<Array<IFile>>([]);
@@ -61,7 +62,7 @@ const FileUpload = () => {
       });
     console.log("Helllllo");
     setCurrentFile(undefined);
-    navigate(-1);
+    navigate(0);
 
     // useEffect(() => {
     //   UploadService.getFiles().then((response) => {
@@ -71,27 +72,32 @@ const FileUpload = () => {
   };
 
   return (
-    <dialog open>
-      <Header style={headerStyle}>
-        <div>
-          <label>
-            <p>Enter File in {parent}</p>
-            <input type="file" onChange={selectFile} />
-          </label>
-        </div>
-        <div>
-          {/* {currentFile && ( */}
-          <Button danger onClick={() => navigate(-1)}>
-            Cancel
-          </Button>
-          <Button type="primary" style={{ marginLeft: "10px" }} disabled={!currentFile} onClick={upload}>
-            Upload
-          </Button>
-        </div>
+    <>
+      {showFileUpload &&
+        (<dialog open>
+          <Header style={headerStyle}>
+            <div>
+              <label>
+                <p>Enter File in {parent}</p>
+                <input type="file" onChange={selectFile} />
+              </label>
+            </div>
+            <div>
+              {/* {currentFile && ( */}
+              <Button danger onClick={() => { setShowFileUpload(false); }}>
+                Cancel
+              </Button>
+              <Button type="primary" style={{ marginLeft: "10px" }} disabled={!currentFile} onClick={upload}>
+                Upload
+              </Button>
+            </div>
 
-        {message && <div>{message}</div>}
-      </Header>
-    </dialog>
+            {message && <div>{message}</div>}
+          </Header>
+        </dialog>
+        )}
+    </>
+
   );
 };
 

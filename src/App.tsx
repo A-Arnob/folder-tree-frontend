@@ -14,8 +14,8 @@ function App() {
         <Route path=":parent" element={<HeaderContent />}>
 
         </Route>
-        <Route path="/:parent/fileupload" element={<FileUpload />}></Route>
-        <Route path="/:parent/addfolder" element={<AddFolder />}></Route>
+        {/* <Route path="/:parent/fileupload" element={<FileUpload />}></Route> */}
+        {/* <Route path="/:parent/addfolder" element={<AddFolder />}></Route> */}
 
       </Routes>
 
@@ -26,6 +26,8 @@ function App() {
           path="/:parent"
           // element={<FolderListNew2 parent="root" />}
           element={<FolderListNew3 />}
+
+
         ></Route>
       </Routes>
     </>
