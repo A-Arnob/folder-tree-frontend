@@ -10,6 +10,7 @@ import DeleteFile from "./DeleteFile";
 interface Folder {
   _id: string;
   name: string;
+  originalName: string;
   parent: string;
 }
 
@@ -131,20 +132,6 @@ function FolderListNew3() {
   }
 
 
-  const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
-    console.log("Enter Handle Click: ");
-    console.dir(event.currentTarget);
-    if (!event.currentTarget.style.backgroundColor) {
-      event.currentTarget.style.backgroundColor = '#a5a5a5';
-      // event.currentTarget.style.color = 'black';
-      console.log("Inside IF: ");
-    } else {
-      event.currentTarget.style.backgroundColor = '';
-      console.log("Inside Else: ");
-    }
-  };
-
-
   useEffect(() => {
     console.log("Calling get...");
     const controller = new AbortController();
@@ -186,24 +173,27 @@ function FolderListNew3() {
   }, [aaa, parent]);
 
 
+  const slicedParent = parent.slice(24);
+
+
   return (
     <>
       {console.log(
         "Current Folders:" + currentFolders.map((folder) => folder.name)
       )}
       <header>
-        <h2 style={{ textAlign: "left", margin: "10px 20px" }}>{parent}/</h2>
+        <h2 style={{ textAlign: "left", margin: "10px 20px" }}>{slicedParent}/</h2>
 
 
         {displayDelete && <DialogModal open onClick={() => setDisplayDelete(false)} >
           <div style={{ textAlign: "right" }}>
-            <DeleteFolderButton onClick={() => { DeleteChild(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</DeleteFolderButton>
+            <DeleteFolderButton onClick={() => { DeleteChild(deleteChildName); navigate(0) }}> <DeleteOutlined />Delete?</DeleteFolderButton>
           </div>
         </DialogModal>}
 
         {displayFileDelete && <DialogModal open onClick={() => setDisplayFileDelete(false)} >
           <div style={{ textAlign: "right" }}>
-            <DeleteFolderButton onClick={() => { DeleteFile(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</DeleteFolderButton>
+            <DeleteFolderButton onClick={() => { DeleteFile(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete File?</DeleteFolderButton>
           </div>
         </DialogModal>}
       </header>
@@ -225,7 +215,7 @@ function FolderListNew3() {
           >
             {/* <li> */}
             <FolderOutlined /> {/* Folder Icon */}
-            <Span>{folder.name}</Span>
+            <Span>{folder.originalName}</Span>
             {/* </li> */}
           </FolderLayout>
         ))}
