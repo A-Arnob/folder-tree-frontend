@@ -85,9 +85,11 @@ const FileLayout = styled.li`
 `;
 
 const DialogModal = styled.dialog`
-  position: absolute;
-  top: 25px; 
-  left: 30rem; 
+  /* position: static; */
+  /* top: 0px;  */
+  right: 2px;
+  /* margin-left: 1rem;  */
+  margin-right: 1rem;
   width: fit-content; 
   height: fit-content;
   padding: 2px 10px;
@@ -119,6 +121,7 @@ function FolderListNew3() {
   const [displayDelete, setDisplayDelete] = useState(false);
   const [deleteChildName, setDeleteChildName] = useState("");
   const [displayFileDelete, setDisplayFileDelete] = useState(false);
+  const [activeButton, setActiveButton] = useState(false);
 
   async function DeleteFolder(name: string) {
     const { status } = await DeleteChild(name);
@@ -126,6 +129,21 @@ function FolderListNew3() {
     console.log("Delete Button Clicked:  " + name);
     setCurrentFolders(currentFolders.filter((folder) => folder.name != name));
   }
+
+
+  const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
+    console.log("Enter Handle Click: ");
+    console.dir(event.currentTarget);
+    if (!event.currentTarget.style.backgroundColor) {
+      event.currentTarget.style.backgroundColor = '#a5a5a5';
+      // event.currentTarget.style.color = 'black';
+      console.log("Inside IF: ");
+    } else {
+      event.currentTarget.style.backgroundColor = '';
+      console.log("Inside Else: ");
+    }
+  };
+
 
   useEffect(() => {
     console.log("Calling get...");
@@ -173,31 +191,9 @@ function FolderListNew3() {
       {console.log(
         "Current Folders:" + currentFolders.map((folder) => folder.name)
       )}
-      <header><h2 style={{ textAlign: "center" }}>{parent}</h2></header>
-      <ul>
+      <header>
+        <h2 style={{ textAlign: "left", margin: "10px 20px" }}>{parent}/</h2>
 
-        {currentFolders.map((folder) => (
-
-          <FolderLayout
-            key={folder._id}
-            onClick={() => { setDisplayDelete(true); setDeleteChildName(folder.name); setDisplayFileDelete(false) }}
-            onDoubleClick={() => {
-              setaaa(!aaa);
-              setDisplayDelete(false);
-              navigate(`/${folder.name}`);
-            }}
-          >
-            {/* <li> */}
-            <FolderOutlined /> {/* Folder Icon */}
-            <Span>{folder.name}</Span>
-            {/* </li> */}
-          </FolderLayout>
-        ))}
-
-        {currentFiles.map((file) => (
-
-          <FileLayout key={file._id} onClick={() => { setDeleteChildName(file.name); setDisplayDelete(false); setDisplayFileDelete(true) }} onDoubleClick={() => { fetchFile(file.name, file.originalname) }}> <FileOutlined /> <Span>{file.originalname}</Span></FileLayout>
-        ))}
 
         {displayDelete && <DialogModal open onClick={() => setDisplayDelete(false)} >
           <div style={{ textAlign: "right" }}>
@@ -210,6 +206,42 @@ function FolderListNew3() {
             <DeleteFolderButton onClick={() => { DeleteFile(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete {deleteChildName}</DeleteFolderButton>
           </div>
         </DialogModal>}
+      </header>
+
+
+
+      <ul>
+
+        {currentFolders.map((folder) => (
+          <FolderLayout
+            key={folder._id}
+            onClick={(e) => { setDisplayDelete(true); setDeleteChildName(folder.name); setDisplayFileDelete(false); }}
+            onDoubleClick={() => {
+              setaaa(!aaa);
+              setDisplayDelete(false);
+              navigate(`/${folder.name}`);
+            }}
+            style={{ backgroundColor: (deleteChildName === folder.name) ? "#a5a5a5" : "" }}
+          >
+            {/* <li> */}
+            <FolderOutlined /> {/* Folder Icon */}
+            <Span>{folder.name}</Span>
+            {/* </li> */}
+          </FolderLayout>
+        ))}
+
+        {currentFiles.map((file) => (
+
+          <FileLayout
+            key={file._id}
+            onClick={() => { setDeleteChildName(file.name); setDisplayDelete(false); setDisplayFileDelete(true) }}
+            onDoubleClick={() => { fetchFile(file.name, file.originalname) }}
+            style={{ backgroundColor: (deleteChildName === file.name) ? "#a5a5a5" : "" }}
+          >
+            <FileOutlined /> <Span>{file.originalname}</Span></FileLayout>
+        ))}
+
+
       </ul>
     </>
   );
