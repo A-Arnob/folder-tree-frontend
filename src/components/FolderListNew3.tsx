@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import DeleteChild from "./DeleteChild";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { AppstoreOutlined, DeleteOutlined, FileOutlined, FolderOutlined, MenuOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, CloseCircleOutlined, DeleteOutlined, FileOutlined, FolderOutlined, MenuOutlined } from "@ant-design/icons";
 import fetchFile from "./fetchFile";
 import DeleteFile from "./DeleteFile";
 
@@ -206,16 +206,16 @@ function FolderListNew3() {
       {console.log(
         "Current Folders:" + currentFolders.map((folder) => folder.name)
       )}
-      <header onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }}>
+      <header style={{ display: "flex", justifyContent: 'space-between' }} onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }}>
         {displayDelete && <DialogModal open onClick={() => setDisplayDelete(false)} >
           <div style={{ textAlign: "right" }}>
-            <DeleteFolderButton onClick={() => { DeleteChild(deleteChildName); navigate(0) }}> <DeleteOutlined />Delete?</DeleteFolderButton>
+            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} /> <DeleteOutlined onClick={() => { DeleteChild(deleteChildName); navigate(0) }} />Delete?</DeleteFolderButton>
           </div>
         </DialogModal>}
 
         {displayFileDelete && <DialogModal open onClick={() => setDisplayFileDelete(false)} >
           <div style={{ textAlign: "right" }}>
-            <DeleteFolderButton onClick={() => { DeleteFile(deleteChildName); navigate(0) }}> <DeleteOutlined /> Delete File?</DeleteFolderButton>
+            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} /> <DeleteOutlined onClick={() => { DeleteFile(deleteChildName); navigate(0) }} /> Delete File?</DeleteFolderButton>
           </div>
         </DialogModal>}
 
