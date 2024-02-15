@@ -54,7 +54,7 @@ const DeleteFolderButton = styled.button`
     border-radius: 0.2em;
   } */
   &:hover{
-    cursor: pointer;
+    /* cursor: pointer; */
   }
 
 `;
@@ -62,7 +62,7 @@ const DeleteFolderButton = styled.button`
 const FolderLayout = styled.li`
   list-style-type: none;
   display:flex;
-  width: 10rem;
+  max-width: 10rem;
   border: 1px solid;
   border-color: #757575;
   border-radius: 10px;
@@ -106,6 +106,7 @@ const DialogModal = styled.dialog`
 const GridViewUl = styled.ul<{ $isShowGrid: boolean }>`
 
 display: ${({ $isShowGrid }) => $isShowGrid ? 'grid' : 'list'};
+padding: 10px 40px;
 grid-template-columns: repeat(1, 1fr);
 grid-template-rows: repeat(2, 100px)
 grid-gap: 10px;
@@ -209,13 +210,13 @@ function FolderListNew3() {
       <header style={{ display: "flex", justifyContent: 'space-between' }} onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }}>
         {displayDelete && <DialogModal open onClick={() => setDisplayDelete(false)} >
           <div style={{ textAlign: "right" }}>
-            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} /> <DeleteOutlined onClick={() => { DeleteChild(deleteChildName); navigate(0) }} />Delete?</DeleteFolderButton>
+            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} />  Delete?  <DeleteOutlined onClick={() => { DeleteChild(deleteChildName); navigate(0) }} /></DeleteFolderButton>
           </div>
         </DialogModal>}
 
         {displayFileDelete && <DialogModal open onClick={() => setDisplayFileDelete(false)} >
           <div style={{ textAlign: "right" }}>
-            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} /> <DeleteOutlined onClick={() => { DeleteFile(deleteChildName); navigate(0) }} /> Delete File?</DeleteFolderButton>
+            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} />  Delete File?  <DeleteOutlined onClick={() => { DeleteFile(deleteChildName); navigate(0) }} /> </DeleteFolderButton>
           </div>
         </DialogModal>}
 

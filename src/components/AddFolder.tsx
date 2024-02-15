@@ -2,7 +2,7 @@ import { FormEvent, useRef, useState } from "react";
 import SendFolder from "./SendFolder";
 import "./AddFolder.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Modal, Form } from "antd";
+import { Button, Modal, Form, Input } from "antd";
 import { styled } from "styled-components";
 
 
@@ -29,7 +29,7 @@ const SubmitButton = styled.button`
 // const AddFolder = ({ ParentFolderName }: { ParentFolderName: string }) => {
 const AddFolder = () => {
   const { parent } = useParams();
-  const nameRef = useRef<HTMLInputElement>(null);
+  const [nameRef, setNameRef] = useState("");
   const newFolder = { name: "test", parent: "" };
   const [showForm, setShowForm] = useState(true);
   const [showOk, setShowOk] = useState(false);
@@ -43,10 +43,10 @@ const AddFolder = () => {
     if (ParentFolderName == undefined) {
       ParentFolderName = "root";
     }
-    console.log("print Name Ref: " + nameRef.current?.value);
+    console.log("print Name Ref: " + nameRef);
     event.defaultPrevented;
 
-    const trimmedNameValue = nameRef.current?.value.trim();
+    const trimmedNameValue = nameRef.trim();
 
     if (!trimmedNameValue) {
       console.log("Returning........");
@@ -67,8 +67,8 @@ const AddFolder = () => {
     // checkAddFolder();
   };
 
-  function okButtonHandler() {
-    const trimmedNameValue = nameRef.current?.value.trim();
+  function okButtonHandler(name: string) {
+    const trimmedNameValue = name.trim();
 
     if (trimmedNameValue) {
       setShowOk(true);
@@ -92,7 +92,7 @@ const AddFolder = () => {
             >
               Add Folder in {ParentFolderName}
             </label>
-            <input ref={nameRef} id="name" type="text" name="name" onChange={okButtonHandler} required />
+            <Input id="name" type="text" name="name" defaultValue={`New Folder`} onChange={(e) => { okButtonHandler(e.target.value); setNameRef(e.target.value) }} required />
           </div>
           {/* <div style={{ textAlign: "center", marginTop: "20px" }}>
             <Button danger onClick={() => { setShowForm(false); }}>Cancel</Button>
