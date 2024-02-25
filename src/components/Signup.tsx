@@ -1,6 +1,7 @@
 // MyForm.js
 import React from 'react';
 import { Form, Input, Button } from 'antd';
+import SignUpService from '../services/SignUpService';
 
 
 const formItemLayout = {
@@ -14,16 +15,23 @@ const formItemLayout = {
     },
 };
 
+interface userData {
+    userName: string;
+    email: string;
+    password: string;
+}
+
 const SignUp = () => {
-    const onFinish = (values: any) => {
+    const onFinish = (values: userData) => {
         console.log('Form values:', values);
         // Handle form submission here
+        SignUpService(values.userName, values.email, values.password);
     };
 
     return (
         <Form {...formItemLayout} variant="filled" style={{ maxWidth: 600, margin: "0 auto" }} onFinish={onFinish}>
             <Form.Item
-                name="username"
+                name="userName"
                 label="Username"
                 rules={[
                     { required: true, message: 'Please enter your username' },

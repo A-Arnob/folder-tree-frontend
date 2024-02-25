@@ -1,6 +1,7 @@
 // MyForm.js
 import React from 'react';
 import { Form, Input, Button } from 'antd';
+import SignInService from '../services/SignInService';
 
 
 const formItemLayout = {
@@ -14,10 +15,16 @@ const formItemLayout = {
     },
 };
 
+interface userData {
+    email: string;
+    password: string;
+}
+
 const SignIn = () => {
-    const onFinish = (values: any) => {
+    const onFinish = (values: userData) => {
         console.log('Form values:', values);
         // Handle form submission here
+        SignInService(values.email, values.password);
     };
 
     return (

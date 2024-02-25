@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       {/* <App /> */}
-      <SignUp />
+      <SignIn />
     </BrowserRouter>
   </React.StrictMode>
 );
