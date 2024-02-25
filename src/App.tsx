@@ -6,10 +6,15 @@ import FolderListNew2 from "./components/FolderListNew2";
 import FolderListNew3 from "./components/FolderListNew3";
 import FileUpload from "./components/FileUpload";
 import HeaderContent from "./components/HeaderContent";
+import SignUpHeader from "./components/SignUpHeader";
 
 function App() {
   return (
     <>
+      <Routes>
+        <Route path="/" element={<SignUpHeader />} ></Route>
+      </Routes>
+
       <Routes>
         <Route path=":parent" element={<HeaderContent />}>
 

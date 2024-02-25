@@ -2,6 +2,7 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import SignUpService from '../services/SignUpService';
+import { useNavigate } from 'react-router-dom';
 
 
 const formItemLayout = {
@@ -22,14 +23,18 @@ interface userData {
 }
 
 const SignUp = () => {
+    const nevigate = useNavigate();
+
     const onFinish = (values: userData) => {
         console.log('Form values:', values);
         // Handle form submission here
         SignUpService(values.userName, values.email, values.password);
+        nevigate(0);
+
     };
 
     return (
-        <Form {...formItemLayout} variant="filled" style={{ maxWidth: 600, margin: "0 auto" }} onFinish={onFinish}>
+        <Form {...formItemLayout} variant="filled" style={{ maxWidth: 600, margin: "20px auto" }} onFinish={onFinish}>
             <Form.Item
                 name="userName"
                 label="Username"

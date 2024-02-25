@@ -9,14 +9,6 @@ import AddFolder from './AddFolder';
 
 
 
-
-function addFile() {
-  return (<>
-    {/* <FileUpload /> */}
-    <div>Hello</div>
-  </>)
-}
-
 const items: MenuProps['items'] = [
   {
     // label: (<Link to={`/${parent}/addfolder`}>Add Folder</Link>),

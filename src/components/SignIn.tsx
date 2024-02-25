@@ -28,7 +28,7 @@ const SignIn = () => {
     };
 
     return (
-        <Form {...formItemLayout} variant="filled" style={{ maxWidth: 600, margin: "0 auto" }} onFinish={onFinish}>
+        <Form {...formItemLayout} variant="filled" style={{ maxWidth: 600, margin: "20px auto" }} onFinish={onFinish}>
 
             <Form.Item
                 name="email"
