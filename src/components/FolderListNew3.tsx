@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { AppstoreOutlined, CloseCircleOutlined, DeleteOutlined, FileOutlined, FolderOutlined, MenuOutlined } from "@ant-design/icons";
 import fetchFile from "./fetchFile";
 import DeleteFile from "./DeleteFile";
+import authHeader from "../services/authHeader";
 
 interface Folder {
   _id: string;
@@ -165,6 +166,7 @@ function FolderListNew3() {
     axios
       .get<Folder[]>(`http://localhost:8080/folders/${parent}`, {
         // params: "mainroot",
+        headers: authHeader(),
         signal: controller.signal,
       })
       .then((res) => {
@@ -186,6 +188,7 @@ function FolderListNew3() {
     axios
       .get<File[]>(`http://localhost:8080/files/${parent}`, {
         // params: "mainroot",
+        headers: authHeader(),
         signal: controller.signal,
       })
       .then((res) => {
