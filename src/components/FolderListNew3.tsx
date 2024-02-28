@@ -162,6 +162,7 @@ function FolderListNew3() {
   useEffect(() => {
     console.log("Calling get...");
     const controller = new AbortController();
+    console.log(authHeader());
 
     axios
       .get<Folder[]>(`http://localhost:8080/folders/${parent}`, {
@@ -171,12 +172,13 @@ function FolderListNew3() {
       })
       .then((res) => {
         setCurrentFolders(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;
       });
 
-
+    console.log("Into last of use effect....");
 
     return () => { controller.abort(); setDisplayDelete(false) }
   }, [aaa, parent]);
@@ -193,6 +195,7 @@ function FolderListNew3() {
       })
       .then((res) => {
         setCurrentFiles(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;

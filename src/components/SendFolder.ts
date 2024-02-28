@@ -7,14 +7,17 @@ type Post = {
   parent: string;
 };
 
-const headers = {
-  authHeader(),
-  "Content-Type": "application/json",
+const headers = () => {
+  let tempAuthHeader = authHeader();
+
+  tempAuthHeader = ({ ...tempAuthHeader, "Content-Type": "application/json" })
+  return tempAuthHeader;
 
 }
 
 async function SendFolder(post: Post) {
 
+  console.log(headers());
 
   if (authHeader()) {
 
@@ -24,12 +27,10 @@ async function SendFolder(post: Post) {
         `http://localhost:8080/folders/addfolder`,
         post,
         {
-          headers: {
-            authHeader(),
-            "Content-Type": "application/json",
-          }
+          headers: headers(),
         }
       );
+
 
       // \uD83D\uDC47️ handle the response
       console.log(response.data);

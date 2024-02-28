@@ -7,7 +7,7 @@ interface userType {
     refreshToken: string;
 }
 
-function authHeader(): AxiosHeaderValue {
+function authHeader(): { 'x-access-token': string } | {} {
     const userStr = localStorage.getItem("user") as string;
     let user: userType = {
         accessToken: "",
@@ -22,7 +22,7 @@ function authHeader(): AxiosHeaderValue {
     if (user && user.accessToken) {
         return { 'x-access-token': user.accessToken };
     } else {
-        return { 'x-access.token': " " };
+        return {};
     }
 }
 
