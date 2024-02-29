@@ -7,6 +7,7 @@ import { AppstoreOutlined, CloseCircleOutlined, DeleteOutlined, FileOutlined, Fo
 import fetchFile from "./fetchFile";
 import DeleteFile from "./DeleteFile";
 import authHeader from "../services/authHeader";
+import { useAuthContext } from "../context/AuthContext";
 
 interface Folder {
   _id: string;
@@ -135,6 +136,9 @@ function FolderListNew3() {
   let { parent } = useParams();
   const goBack = () => navigate(-1);
 
+  const { user } = useAuthContext();
+  console.log("Auth asas", user);
+
   if (!parent) {
     parent = "mainroot";
   }
@@ -162,12 +166,14 @@ function FolderListNew3() {
   useEffect(() => {
     console.log("Calling get...");
     const controller = new AbortController();
-    console.log(authHeader());
+    // console.log(authHeader());
 
     axios
       .get<Folder[]>(`http://localhost:8080/folders/${parent}`, {
         // params: "mainroot",
-        headers: authHeader(),
+        headers: {
+          "x-access-token": user?.accessToken
+        },
         signal: controller.signal,
       })
       .then((res) => {
@@ -190,7 +196,7 @@ function FolderListNew3() {
     axios
       .get<File[]>(`http://localhost:8080/files/${parent}`, {
         // params: "mainroot",
-        headers: authHeader(),
+        headers: { "x-access-token": user?.accessToken },
         signal: controller.signal,
       })
       .then((res) => {

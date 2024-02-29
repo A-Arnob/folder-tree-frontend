@@ -8,18 +8,20 @@ import FileUpload from "./components/FileUpload";
 import HeaderContent from "./components/HeaderContent";
 import SignUpHeader from "./components/SignUpHeader";
 import { useAuth } from "./hooks/useAuth";
-import { AuthContext } from "./context/AuthContext";
+import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 
 function App() {
-  const { user, login, logout, setUser } = useAuth();
+  // const { user, setUser } = useAuth();
+  // console.log("USER VALUE: .....  " + user)
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<SignUpHeader />} ></Route>
-      </Routes>
-      <AuthContext.Provider value={{ user, setUser }}>
 
+      <AuthContextProvider>
+
+        <Routes>
+          <Route path="/" element={<SignUpHeader />} ></Route>
+        </Routes>
         <Routes>
           <Route path=":parent" element={<HeaderContent />}>
 
@@ -41,7 +43,9 @@ function App() {
           ></Route>
         </Routes>
 
-      </AuthContext.Provider>
+
+
+      </AuthContextProvider>
     </>
   );
 }

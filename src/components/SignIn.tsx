@@ -1,7 +1,8 @@
 // MyForm.js
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Input, Button } from 'antd';
 import signedServices from '../services/SignInService';
+import { User, useAuthContext } from '../context/AuthContext';
 
 
 const formItemLayout = {
@@ -20,11 +21,33 @@ interface userData {
     password: string;
 }
 
+// export let userTokenData: User;
+
 const SignIn = () => {
-    const onFinish = (values: userData) => {
+
+    const { setUser } = useAuthContext();
+
+    const onFinish = async (values: userData) => {
         console.log('Form values:', values);
         // Handle form submission here
-        signedServices.SignInService(values.email, values.password);
+        // const userTokenData = signedServices.SignInService(values.email, values.password, (_error, userTokenData) => {
+        //     if (userTokenData) {
+        //         if (userTokenData.accessToken && userTokenData.refreshToken) {
+        //             localStorage.setItem("user", JSON.stringify(userTokenData));
+        //             setUser(userTokenData);
+        //         }
+        //     }
+        // });
+
+        const userTokenData = await signedServices.SignInService(values.email, values.password);
+
+        if (userTokenData) {
+            if (userTokenData.accessToken && userTokenData.refreshToken) {
+                localStorage.setItem("user", JSON.stringify(userTokenData));
+                setUser(userTokenData);
+            }
+        }
+
     };
 
     return (
