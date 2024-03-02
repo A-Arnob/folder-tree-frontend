@@ -41,7 +41,7 @@ const AddFolder = () => {
 
   const handleSubmit = (event: FormEvent) => {
     if (ParentFolderName == undefined) {
-      ParentFolderName = "root";
+      ParentFolderName = "mainroot";
     }
     console.log("print Name Ref: " + nameRef);
     event.defaultPrevented;

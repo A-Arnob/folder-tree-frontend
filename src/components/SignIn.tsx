@@ -3,6 +3,8 @@ import React, { useContext } from 'react';
 import { Form, Input, Button } from 'antd';
 import signedServices from '../services/SignInService';
 import { User, useAuthContext } from '../context/AuthContext';
+import { axiosInstance } from '../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const formItemLayout = {
@@ -26,6 +28,7 @@ interface userData {
 const SignIn = () => {
 
     const { setUser } = useAuthContext();
+    const nevigate = useNavigate();
 
     const onFinish = async (values: userData) => {
         console.log('Form values:', values);
@@ -45,6 +48,8 @@ const SignIn = () => {
             if (userTokenData.accessToken && userTokenData.refreshToken) {
                 localStorage.setItem("user", JSON.stringify(userTokenData));
                 setUser(userTokenData);
+                axiosInstance.defaults.headers["x-access-token"] = userTokenData.accessToken;
+                nevigate("/mainroot");
             }
         }
 

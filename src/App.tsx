@@ -22,25 +22,16 @@ function App() {
         <Routes>
           <Route path="/" element={<SignUpHeader />} ></Route>
         </Routes>
+
         <Routes>
-          <Route path=":parent" element={<HeaderContent />}>
-
-          </Route>
-          {/* <Route path="/:parent/fileupload" element={<FileUpload />}></Route> */}
-          {/* <Route path="/:parent/addfolder" element={<AddFolder />}></Route> */}
-
+          <Route path="/mainroot" element={<HeaderContent />}></Route>
+          <Route path="/:parent" element={<HeaderContent />}></Route>
         </Routes>
 
 
         <Routes>
-          <Route path="/" element={<FolderListNew3 />}></Route>
-          <Route
-            path="/:parent"
-            // element={<FolderListNew2 parent="root" />}
-            element={<FolderListNew3 />}
-
-
-          ></Route>
+          <Route path="/mainroot" element={<FolderListNew3 />}></Route>
+          <Route path="/:parent" element={<FolderListNew3 />}></Route>
         </Routes>
 
 

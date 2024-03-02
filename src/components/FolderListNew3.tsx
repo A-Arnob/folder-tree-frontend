@@ -8,6 +8,7 @@ import fetchFile from "./fetchFile";
 import DeleteFile from "./DeleteFile";
 import authHeader from "../services/authHeader";
 import { useAuthContext } from "../context/AuthContext";
+import { axiosInstance } from "../api/axios";
 
 interface Folder {
   _id: string;
@@ -168,12 +169,8 @@ function FolderListNew3() {
     const controller = new AbortController();
     // console.log(authHeader());
 
-    axios
-      .get<Folder[]>(`http://localhost:8080/folders/${parent}`, {
-        // params: "mainroot",
-        headers: {
-          "x-access-token": user?.accessToken
-        },
+    axiosInstance
+      .get<Folder[]>(`/folders/${parent}`, {
         signal: controller.signal,
       })
       .then((res) => {
@@ -181,7 +178,14 @@ function FolderListNew3() {
         console.log(res.data);
       })
       .catch((err) => {
+
+        console.log("Into Errooor");
+        if (err.response.status === 403) {
+          navigate("/");
+          console.log("Error Status: ...", err.response.status);
+        }
         if (err instanceof CanceledError) return;
+
       });
 
     console.log("Into last of use effect....");
@@ -193,10 +197,10 @@ function FolderListNew3() {
     console.log("Calling get...");
     const controller = new AbortController();
 
-    axios
-      .get<File[]>(`http://localhost:8080/files/${parent}`, {
+    axiosInstance
+      .get<File[]>(`/files/${parent}`, {
         // params: "mainroot",
-        headers: { "x-access-token": user?.accessToken },
+        // headers: { "x-access-token": user?.accessToken },
         signal: controller.signal,
       })
       .then((res) => {

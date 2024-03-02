@@ -41,6 +41,7 @@ const SignUpHeader = () => {
                 {/* <div className="logo">Your Logo</div> */}
                 <Menu theme="dark" mode="horizontal" items={items} onClick={onClickHandler} />
             </Header>
+            <h1 style={{ color: "red", textAlign: "center", margin: "40px auto" }}>Sign Up OR Sign In  </h1>
             {signType === "signup" && <SignUp />}
             {signType === "signin" && <SignIn />}
         </>

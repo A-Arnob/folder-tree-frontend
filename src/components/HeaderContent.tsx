@@ -6,6 +6,8 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import FileUpload from './FileUpload';
 import { useNavigate } from 'react-router-dom';
 import AddFolder from './AddFolder';
+import { useAuthContext } from '../context/AuthContext';
+import SubMenu from 'antd/es/menu/SubMenu';
 
 
 
@@ -21,9 +23,13 @@ const items: MenuProps['items'] = [
     label: "Add file",
     key: 'File',
     icon: <FileAddOutlined />,
-  }]
+
+  },
+]
 
 const HeaderContent = () => {
+
+  const { user } = useAuthContext();
 
   const { Header, Content, Footer } = Layout;
 
@@ -65,9 +71,22 @@ const HeaderContent = () => {
             // defaultSelectedKeys={['1']}
             selectedKeys={[currentClicked]}
             items={items}
-            style={{ flex: 1, minWidth: 0 }}
+            style={{ flex: 1, minWidth: 0, }}
             onClick={menuClickFunction}
+
           />
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            // defaultSelectedKeys={['1']}
+            selectedKeys={[currentClicked]}
+            items={items}
+            style={{ flex: 1, minWidth: 0, marginLeft: "10px" }}
+            onClick={menuClickFunction}
+
+          />
+
+
         </Header>
       </Layout>
 
