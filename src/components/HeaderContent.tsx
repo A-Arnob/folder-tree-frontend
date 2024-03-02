@@ -63,7 +63,7 @@ const HeaderContent = () => {
 
 
       <Layout>
-        <Header style={{ display: 'flex', alignItems: 'center' }}>
+        <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div className="demo-logo" />
           <Menu
             theme="dark"
@@ -81,7 +81,7 @@ const HeaderContent = () => {
             // defaultSelectedKeys={['1']}
             selectedKeys={[currentClicked]}
             items={items}
-            style={{ flex: 1, minWidth: 0, marginLeft: "10px" }}
+            style={{ flex: 1, minWidth: 0, justifyContent: "flex-end" }}
             onClick={menuClickFunction}
 
           />
