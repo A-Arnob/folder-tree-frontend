@@ -7,7 +7,7 @@ import FolderListNew3 from "./components/FolderListNew3";
 import FileUpload from "./components/FileUpload";
 import HeaderContent from "./components/HeaderContent";
 import SignUpHeader from "./components/SignUpHeader";
-import { useAuth } from "./hooks/useAuth";
+// import { useAuth } from "./hooks/useAuth";
 import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 
 function App() {
