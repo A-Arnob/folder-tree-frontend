@@ -1,14 +1,11 @@
 // import FolderList from "./components/FolderList";
 import { Route, Routes } from "react-router-dom";
-import AddFolder from "./components/AddFolder";
-import FolderListNew from "./components/FolderListNew";
-import FolderListNew2 from "./components/FolderListNew2";
 import FolderListNew3 from "./components/FolderListNew3";
-import FileUpload from "./components/FileUpload";
 import HeaderContent from "./components/HeaderContent";
 import SignUpHeader from "./components/SignUpHeader";
 // import { useAuth } from "./hooks/useAuth";
-import { AuthContext, AuthContextProvider } from "./context/AuthContext";
+import { AuthContextProvider } from "./context/AuthContext";
+import SignIn from "./components/SignIn";
 
 function App() {
   // const { user, setUser } = useAuth();
@@ -21,6 +18,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<SignUpHeader />} ></Route>
+          <Route path="/signin" element={<SignIn/>}/>
         </Routes>
 
         <Routes>

@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-import { Breadcrumb, Layout, Menu, MenuProps, theme } from 'antd';
-import { FileAddOutlined, FolderAddOutlined, MailOutlined } from '@ant-design/icons';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import {  Layout, Menu, MenuProps,  } from 'antd';
+import { FileAddOutlined, FolderAddOutlined } from '@ant-design/icons';
+import {  useParams } from 'react-router-dom';
 import FileUpload from './FileUpload';
 import { useNavigate } from 'react-router-dom';
 import AddFolder from './AddFolder';
 import { useAuthContext } from '../context/AuthContext';
-import SubMenu from 'antd/es/menu/SubMenu';
+
 
 
 
@@ -27,11 +27,31 @@ const items: MenuProps['items'] = [
   },
 ]
 
+
+
 const HeaderContent = () => {
 
-  const { user } = useAuthContext();
+  const { user, setUser } = useAuthContext();
+  const nevigate = useNavigate();
+  
 
-  const { Header, Content, Footer } = Layout;
+  const userData: MenuProps['items'] = [
+    {
+      // label: (<Link to={`/${parent}/addfolder`}>Add Folder</Link>),
+      label: user?.userName,
+      key: 'userName',
+      
+    },
+    {
+      // label: (<Link to={`/${parent}/fileupload`}>Add File</Link>),
+      label: "Log Out",
+      key: 'logOut',
+      
+  
+    },
+  ]
+
+  const { Header, } = Layout;
 
   const { parent } = useParams();
   const [currentClicked, setCurrentClicked] = useState("");
@@ -51,6 +71,10 @@ const HeaderContent = () => {
     } else if (e.key == "File") {
       setIsAddFile(!isAddFile);
       setIsAddFolder(false);
+    }else if (e.key === "logOut"){
+      setUser(null);
+      localStorage.removeItem("user");
+      nevigate("/");
     }
 
 
@@ -80,7 +104,7 @@ const HeaderContent = () => {
             mode="horizontal"
             // defaultSelectedKeys={['1']}
             selectedKeys={[currentClicked]}
-            items={items}
+            items={userData}
             style={{ flex: 1, minWidth: 0, justifyContent: "flex-end" }}
             onClick={menuClickFunction}
 

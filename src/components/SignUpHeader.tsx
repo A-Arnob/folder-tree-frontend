@@ -18,17 +18,21 @@ const items: MenuProps['items'] = [
         key: 'signin',
     }]
 
-const SignUpHandler: MenuProps["onClick"] = () => {
-    console.log("Clicked");
-    return <SignUp />;
-}
+// const SignUpHandler: MenuProps["onClick"] = () => {
+//     console.log("Clicked");
+//     return <SignUp />;
+// }
 
-function SignInHandler() {
-    return <SignIn />;
-}
+// function SignInHandler() {
+//     return <SignIn />;
+// }
 
 const SignUpHeader = () => {
     const [signType, setSignType] = useState("");
+
+    const setSignTypeProps = (value:string)=>{
+        setSignType(value);
+    }
 
     const onClickHandler: MenuProps["onClick"] = (e) => {
         setSignType(e.key);
@@ -42,7 +46,7 @@ const SignUpHeader = () => {
                 <Menu theme="dark" mode="horizontal" items={items} onClick={onClickHandler} />
             </Header>
             <h1 style={{ color: "red", textAlign: "center", margin: "40px auto" }}>Sign Up OR Sign In  </h1>
-            {signType === "signup" && <SignUp />}
+            {signType === "signup" && <SignUp setSignTypeProps={setSignTypeProps}/>}
             {signType === "signin" && <SignIn />}
         </>
     );

@@ -1,12 +1,11 @@
-import axios, { CanceledError } from "axios";
+import  { CanceledError } from "axios";
 import { useState, useEffect } from "react";
 import DeleteChild from "./DeleteChild";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { AppstoreOutlined, CloseCircleOutlined, DeleteOutlined, FileOutlined, FolderOutlined, MenuOutlined } from "@ant-design/icons";
 import fetchFile from "./fetchFile";
 import DeleteFile from "./DeleteFile";
-import authHeader from "../services/authHeader";
 import { useAuthContext } from "../context/AuthContext";
 import { axiosInstance } from "../api/axios";
 
@@ -111,7 +110,7 @@ const GridViewUl = styled.ul<{ $isShowGrid: boolean }>`
 display: ${({ $isShowGrid }) => $isShowGrid ? 'grid' : 'list'};
 padding: 10px 40px;
 grid-template-columns: repeat(1, 1fr);
-grid-template-rows: repeat(2, 100px)
+grid-template-rows: repeat(2, 100px);
 grid-gap: 10px;
 
 @media(min-width: 380px){
@@ -135,7 +134,7 @@ grid-gap: 10px;
 function FolderListNew3() {
   const navigate = useNavigate();
   let { parent } = useParams();
-  const goBack = () => navigate(-1);
+  // const goBack = () => navigate(-1);
 
   const { user } = useAuthContext();
   console.log("Auth asas", user);
@@ -149,19 +148,19 @@ function FolderListNew3() {
   const [currentFolders, setCurrentFolders] = useState<Folder[]>([]);
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
 
-  const [currentFolderName, setCurrentFolderName] = useState("");
+  // const [currentFolderName, setCurrentFolderName] = useState("");
   const [displayDelete, setDisplayDelete] = useState(false);
   const [deleteChildName, setDeleteChildName] = useState("");
   const [displayFileDelete, setDisplayFileDelete] = useState(false);
-  const [activeButton, setActiveButton] = useState(false);
+  // const [activeButton, setActiveButton] = useState(false);
   const [isShowGrid, setIsShowGrid] = useState(false);
 
-  async function DeleteFolder(name: string) {
-    const { status } = await DeleteChild(name);
-    console.log(status);
-    console.log("Delete Button Clicked:  " + name);
-    setCurrentFolders(currentFolders.filter((folder) => folder.name != name));
-  }
+  // async function DeleteFolder(name: string) {
+  //   const { status } = await DeleteChild(name);
+  //   console.log(status);
+  //   console.log("Delete Button Clicked:  " + name);
+  //   setCurrentFolders(currentFolders.filter((folder) => folder.name != name));
+  // }
 
 
   useEffect(() => {
@@ -248,7 +247,7 @@ function FolderListNew3() {
         {currentFolders.map((folder) => (
           <FolderLayout
             key={folder._id}
-            onClick={(e) => { setDisplayDelete(true); setDeleteChildName(folder.name); setDisplayFileDelete(false); }}
+            onClick={() => { setDisplayDelete(true); setDeleteChildName(folder.name); setDisplayFileDelete(false); }}
             onDoubleClick={() => {
               setaaa(!aaa);
               setDisplayDelete(false);

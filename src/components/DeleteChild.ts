@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { useEffect } from "react";
+import { axiosInstance } from "../api/axios";
 
 const DeleteChild = (name: string) => {
   // useEffect(() => {
@@ -7,7 +8,7 @@ const DeleteChild = (name: string) => {
   // }, []);
 
   return new Promise<AxiosResponse<any>>((resolve, reject) => {
-    axios.post(`http://localhost:8080/folders/delete/${name}`, {}).then(
+    axiosInstance.post(`/folders/delete/${name}`, {}).then(
       (response) => {
         console.log(response);
         resolve(response);

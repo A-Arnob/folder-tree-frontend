@@ -1,5 +1,6 @@
 import axios from "axios";
 import { User } from "../context/AuthContext";
+import { axiosInstance } from "../api/axios";
 
 const API_URL = "http://localhost:8080/";
 
@@ -20,7 +21,7 @@ const API_URL = "http://localhost:8080/";
 
 const SignInService = (email: string, password: string) => {
     return new Promise<User>((resolve, reject) => {
-        axios.post(API_URL + "signin", {
+        axiosInstance.post(API_URL + "signin", {
             email,
             password,
         }).then((res) => {

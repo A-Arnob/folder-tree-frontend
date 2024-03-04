@@ -22,14 +22,19 @@ interface userData {
     password: string;
 }
 
-const SignUp = () => {
+// interface setSignTypeProps{
+
+// }
+
+const SignUp = ({setSignTypeProps}) => {
     const nevigate = useNavigate();
 
     const onFinish = (values: userData) => {
         console.log('Form values:', values);
         // Handle form submission here
         SignUpService(values.userName, values.email, values.password);
-        nevigate(0);
+        // nevigate("/signin");
+        setSignTypeProps("signin")
 
     };
 

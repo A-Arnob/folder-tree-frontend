@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import UploadService from "../services/FileUploadService";
-import { Button, Modal } from "antd";
-import { Layout, Flex } from "antd";
+import { Modal } from "antd";
+import { Layout } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 
 const { Header } = Layout;
 
-const headerStyle: React.CSSProperties = {
-  textAlign: "center",
-  color: "#000000",
-  height: "11rem",
-  width: "30rem",
-  margin: "5rem auto",
-  padding: "10px 10px",
-  paddingInline: 48,
-  lineHeight: "50px",
-  backgroundColor: "#d3d1d1",
-  borderRadius: "5px",
-};
+// const headerStyle: React.CSSProperties = {
+//   textAlign: "center",
+//   color: "#000000",
+//   height: "11rem",
+//   width: "30rem",
+//   margin: "5rem auto",
+//   padding: "10px 10px",
+//   paddingInline: 48,
+//   lineHeight: "50px",
+//   backgroundColor: "#d3d1d1",
+//   borderRadius: "5px",
+// };
 
 interface IFile {
   url: string;
@@ -31,7 +31,7 @@ const FileUpload = () => {
   const [showFileUpload, setShowFileUpload] = useState(true);
   // const [progress, setProgress] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
-  const [fileInfos, setFileInfos] = useState<Array<IFile>>([]);
+  // const [fileInfos, setFileInfos] = useState<Array<IFile>>([]);
   const navigate = useNavigate();
 
   const selectFile = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,10 +73,14 @@ const FileUpload = () => {
 
   return (
     <>
-
       {/* {showFileUpload && */}
-      <Modal title="File Upload" open={showFileUpload} onOk={upload} okButtonProps={{ disabled: !currentFile }} onCancel={() => setShowFileUpload(false)}>
-
+      <Modal
+        title="File Upload"
+        open={showFileUpload}
+        onOk={upload}
+        okButtonProps={{ disabled: !currentFile }}
+        onCancel={() => setShowFileUpload(false)}
+      >
         {/* <div style={headerStyle}> */}
         <div>
           <label>
@@ -95,10 +99,8 @@ const FileUpload = () => {
 
         {message && <div>{message}</div>}
         {/* </div> */}
-
       </Modal>
     </>
-
   );
 };
 

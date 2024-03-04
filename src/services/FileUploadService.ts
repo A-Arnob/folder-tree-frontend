@@ -1,5 +1,6 @@
 
-import http from "../http-common";
+import { axiosInstance } from "../api/axios";
+// import http from "../http-common";
 
 const upload = (file: File, parent: string | undefined): Promise<any> => {
 
@@ -7,12 +8,12 @@ const upload = (file: File, parent: string | undefined): Promise<any> => {
     parent = "mainroot";
   }
 
-  let formData = new FormData();
+  const formData = new FormData();
 
   formData.append("file", file);
   formData.append("parent", parent);
 
-  return http.post("/fileupload", formData, {
+  return axiosInstance.post("/fileupload", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -20,7 +21,7 @@ const upload = (file: File, parent: string | undefined): Promise<any> => {
 };
 
 const getFiles = (): Promise<any> => {
-  return http.get("/files");
+  return axiosInstance.get("/files");
 };
 
 const fileuploadService = {

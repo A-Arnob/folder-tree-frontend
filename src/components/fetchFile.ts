@@ -1,11 +1,12 @@
 import axios, { CanceledError } from "axios";
 import { useEffect } from "react";
+import { axiosInstance } from "../api/axios";
 
 function fecthFile(fileName: string, originalFileName: string) {
 
     // useEffect(() => {
-    return axios({
-        url: `http://localhost:8080/file/${fileName}`, // Replace with your server URL
+    return axiosInstance({
+        url: `/file/${fileName}`, // Replace with your server URL
         method: 'GET',
         responseType: 'blob', // Important
     }).then((response) => {

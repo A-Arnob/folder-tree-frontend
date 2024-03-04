@@ -1,5 +1,6 @@
 import axios, { CanceledError } from "axios";
 import { useState, useEffect } from "react";
+import { axiosInstance } from "../api/axios";
 
 interface Folder {
   _id: string;
@@ -13,8 +14,8 @@ const FetchChild = (parent: string) => {
   useEffect(() => {
     const controller = new AbortController();
 
-    axios
-      .get<Folder[]>(`http://localhost:8080/folders/${parent}`, {
+    axiosInstance
+      .get<Folder[]>(`/folders/${parent}`, {
         // params: parent,
         signal: controller.signal,
       })
