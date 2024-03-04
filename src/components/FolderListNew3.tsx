@@ -179,10 +179,10 @@ function FolderListNew3() {
       .catch((err) => {
 
         console.log("Into Errooor");
-        if (err.response.status === 403) {
-          navigate("/");
-          console.log("Error Status: ...", err.response.status);
-        }
+        // if (err.response.status === 401) {
+        //   navigate("/");
+        //   console.log("Error Status: ...", err.response.status);
+        // }
         if (err instanceof CanceledError) return;
 
       });

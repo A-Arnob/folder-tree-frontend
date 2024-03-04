@@ -2,6 +2,7 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import SignUpService from '../services/SignUpService';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useNavigate } from 'react-router-dom';
 
 
@@ -22,12 +23,11 @@ interface userData {
     password: string;
 }
 
-// interface setSignTypeProps{
+interface PropsFn{
+    setSignTypeProps: (s:string)=>void;
+}
 
-// }
-
-const SignUp = ({setSignTypeProps}) => {
-    const nevigate = useNavigate();
+const SignUp = ({setSignTypeProps}: PropsFn) => {
 
     const onFinish = (values: userData) => {
         console.log('Form values:', values);

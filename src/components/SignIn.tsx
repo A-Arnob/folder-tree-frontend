@@ -1,7 +1,9 @@
 // MyForm.js
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useContext } from 'react';
 import { Form, Input, Button } from 'antd';
 import signedServices from '../services/SignInService';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { User, useAuthContext } from '../context/AuthContext';
 import { axiosInstance } from '../api/axios';
 import { useNavigate } from 'react-router-dom';

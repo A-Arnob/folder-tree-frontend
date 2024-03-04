@@ -1,4 +1,13 @@
 import axios, {  InternalAxiosRequestConfig } from "axios";
+import mem from "mem";
+
+export const axiosInstancePublic = axios.create({
+  baseURL: "http://localhost:8080",
+  headers: {
+    "Content-Type": "application/json",
+
+  },
+})
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:8080",
@@ -38,8 +47,14 @@ axiosInstance.interceptors.response.use(
           const rs = await refreshTokenfn();
           const {accessToken } = rs.data;
           const { refreshToken } = rs.data;
-          localStorage.setItem("access-token", accessToken);
-          localStorage.setItem("refresh-token", refreshToken);
+
+          const user = JSON.parse(localStorage.getItem("user") as string);
+          user.accessToken = accessToken;
+          user.refreshToken = refreshToken;
+          localStorage.setItem("user", JSON.stringify(user));
+
+          // localStorage.setItem("access-token", accessToken);
+          // localStorage.setItem("refresh-token", refreshToken);
           axiosInstance.defaults.headers.common["x-access-token"] = accessToken;
 
           return axiosInstance(originalConfig);
@@ -61,8 +76,18 @@ axiosInstance.interceptors.response.use(
   }
 );
 
+
 async function refreshTokenfn(){
+
+  const user = JSON.parse(localStorage.getItem("user") as string);
+
   return axiosInstance.post("/refreshtoken",{
-    refreshToken: localStorage.getItem("refresh-token")
+    refreshToken: user.refreshToken
   })
 }
+
+const maxAge = 10000;
+
+const memorizedRefreshTokenFn = mem(refreshTokenfn, {
+  maxAge,
+});
