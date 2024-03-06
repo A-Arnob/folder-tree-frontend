@@ -1,5 +1,4 @@
-import axios, { AxiosResponse } from "axios";
-import { useEffect } from "react";
+import { AxiosResponse } from "axios";
 import { axiosInstance } from "../api/axios";
 
 const DeleteFile = (name: string) => {
@@ -7,6 +6,7 @@ const DeleteFile = (name: string) => {
 
     // }, []);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return new Promise<AxiosResponse<any>>((resolve, reject) => {
         axiosInstance.post(`/file/delete/${name}`, {
             headers:{

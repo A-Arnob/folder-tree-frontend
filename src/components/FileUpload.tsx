@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import UploadService from "../services/FileUploadService";
 import { Modal } from "antd";
-import { Layout } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useRefreshContext } from "../context/refreshContext";
 
-const { Header } = Layout;
 
 // const headerStyle: React.CSSProperties = {
 //   textAlign: "center",
@@ -20,13 +18,18 @@ const { Header } = Layout;
 //   borderRadius: "5px",
 // };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface IFile {
   url: string;
   name: string;
 }
 
-const FileUpload = () => {
-  let { parent } = useParams();
+interface IsAddFileType{
+  setIsAddFile: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const FileUpload = ({setIsAddFile}:IsAddFileType) => {
+  const { parent } = useParams();
   const {refresh, setRefresh} = useRefreshContext();
 
   const [currentFile, setCurrentFile] = useState<File>();
@@ -34,7 +37,6 @@ const FileUpload = () => {
   // const [progress, setProgress] = useState<number>(0);
   const [message, setMessage] = useState<string>("");
   // const [fileInfos, setFileInfos] = useState<Array<IFile>>([]);
-  const navigate = useNavigate();
 
   const selectFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -52,6 +54,7 @@ const FileUpload = () => {
         // return UploadService.getFiles();
         // navigate(0);
         setRefresh(!refresh);
+        setIsAddFile(false);
       })
       // .then((files) => {
       //   // setFileInfos(files.data);

@@ -1,9 +1,16 @@
-import  { CanceledError } from "axios";
+import { CanceledError } from "axios";
 import { useState, useEffect } from "react";
 import DeleteChild from "./DeleteChild";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { AppstoreOutlined, CloseCircleOutlined, DeleteOutlined, FileOutlined, FolderOutlined, MenuOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  CloseCircleOutlined,
+  DeleteOutlined,
+  FileOutlined,
+  FolderOutlined,
+  MenuOutlined,
+} from "@ant-design/icons";
 import fetchFile from "./fetchFile";
 import DeleteFile from "./DeleteFile";
 import { useAuthContext } from "../context/AuthContext";
@@ -33,10 +40,9 @@ const SpanButton = styled.button`
   font-size: 16px;
   font-weight: bolder;
 
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
-
 `;
 
 const DeleteFolderButton = styled.button`
@@ -48,7 +54,7 @@ const DeleteFolderButton = styled.button`
   /* padding: 5px 2px; */
   font-size: 20px;
   font-weight: bolder;
-  background:none;
+  background: none;
   border: none;
 
   /* &:hover {
@@ -56,22 +62,21 @@ const DeleteFolderButton = styled.button`
     border: 1px solid;
     border-radius: 0.2em;
   } */
-  &:hover{
+  &:hover {
     /* cursor: pointer; */
   }
-
 `;
 
 const FolderLayout = styled.li`
   list-style-type: none;
-  display:flex;
+  display: flex;
   max-width: 10rem;
   border: 1px solid;
   border-color: #757575;
   border-radius: 10px;
   padding: 2px 20px;
   margin: 15px 10px;
-  background-color: #e6e6e6;  
+  background-color: #e6e6e6;
 
   &:hover {
     background-color: #a5a5a5;
@@ -79,12 +84,9 @@ const FolderLayout = styled.li`
 `;
 
 const FileLayout = styled(FolderLayout)`
-
   width: fit-content;
   border-color: #b4b4b4;
   border-radius: 4px;
-
-
 `;
 
 const DialogModal = styled.dialog`
@@ -93,47 +95,41 @@ const DialogModal = styled.dialog`
   right: 2px;
   /* margin-left: 1rem;  */
   margin-right: 1rem;
-  width: fit-content; 
+  width: fit-content;
   height: fit-content;
   padding: 2px 10px;
   background: #eedee3;
   border: 1px solid;
   border-radius: 6px;
 
-  &:hover{
+  &:hover {
     background: #f599bf;
-      
   }
 `;
 
 const GridViewUl = styled.ul<{ $isShowGrid: boolean }>`
+  display: ${({ $isShowGrid }) => ($isShowGrid ? "grid" : "list")};
+  padding: 10px 40px;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(2, 100px);
+  grid-gap: 10px;
 
-display: ${({ $isShowGrid }) => $isShowGrid ? 'grid' : 'list'};
-padding: 10px 40px;
-grid-template-columns: repeat(1, 1fr);
-grid-template-rows: repeat(2, 100px);
-grid-gap: 10px;
-
-@media(min-width: 380px){
-  grid-template-columns: repeat(2, 1fr);
-}
-@media(min-width: 600px){
-  grid-template-columns: repeat(3, 1fr);
-}
-@media(min-width: 850px){
-  grid-template-columns: repeat(4, 1fr);
-}
-@media(min-width: 1080px){
-  grid-template-columns: repeat(5, 1fr);
-}
-
+  @media (min-width: 380px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: 850px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (min-width: 1080px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
 `;
 
-
-
-
 function FolderListNew3() {
-  const {refresh, setRefresh} = useRefreshContext();
+  const { refresh, setRefresh } = useRefreshContext();
 
   const navigate = useNavigate();
   let { parent } = useParams();
@@ -165,7 +161,6 @@ function FolderListNew3() {
   //   setCurrentFolders(currentFolders.filter((folder) => folder.name != name));
   // }
 
-
   useEffect(() => {
     console.log("Calling get...");
     const controller = new AbortController();
@@ -180,19 +175,20 @@ function FolderListNew3() {
         console.log(res.data);
       })
       .catch((err) => {
-
         console.log("Into Errooor");
         // if (err.response.status === 401) {
         //   navigate("/");
         //   console.log("Error Status: ...", err.response.status);
         // }
         if (err instanceof CanceledError) return;
-
       });
 
     console.log("Into last of use effect....");
 
-    return () => { controller.abort(); setDisplayDelete(false) }
+    return () => {
+      controller.abort();
+      setDisplayDelete(false);
+    };
   }, [aaa, parent, refresh]);
 
   useEffect(() => {
@@ -213,50 +209,111 @@ function FolderListNew3() {
         if (err instanceof CanceledError) return;
       });
 
-    return () => { controller.abort(); setDisplayDelete(false) }
+    return () => {
+      controller.abort();
+      setDisplayDelete(false);
+    };
   }, [aaa, parent, refresh]);
 
-
   const slicedParent = parent.slice(24);
-
 
   return (
     <>
       {console.log(
         "Current Folders:" + currentFolders.map((folder) => folder.name)
       )}
-      <header style={{ display: "flex", justifyContent: 'space-between' }} onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }}>
-        {displayDelete && <DialogModal open onClick={() => setDisplayDelete(false)} >
-          <div style={{ textAlign: "right" }}>
-            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} />  Delete?  <DeleteOutlined onClick={async () => { await DeleteChild(deleteChildName); navigate(0) }} /></DeleteFolderButton>
-          </div>
-        </DialogModal>}
+      <header
+        style={{ display: "flex", justifyContent: "space-between" }}
+        onClick={() => {
+          setDisplayDelete(false);
+          setDisplayFileDelete(false);
+          setDeleteChildName("");
+        }}
+      >
+        {displayDelete && (
+          <DialogModal open onClick={() => setDisplayDelete(false)}>
+            <div style={{ textAlign: "right" }}>
+              <DeleteFolderButton>
+                <CloseCircleOutlined
+                  onClick={() => {
+                    setDisplayDelete(false);
+                    setDisplayFileDelete(false);
+                    setDeleteChildName("");
+                  }}
+                />{" "}
+                Delete?{" "}
+                <DeleteOutlined
+                  onClick={async () => {
+                    await DeleteChild(deleteChildName);
+                    setRefresh(!refresh);
+                    setDisplayDelete(false);
+                    setDisplayFileDelete(false);
+                  }}
+                />
+              </DeleteFolderButton>
+            </div>
+          </DialogModal>
+        )}
 
-        {displayFileDelete && <DialogModal open onClick={() => setDisplayFileDelete(false)} >
-          <div style={{ textAlign: "right" }}>
-            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} />  Delete File?  <DeleteOutlined onClick={async () => { await DeleteFile(deleteChildName); navigate(0) }} /> </DeleteFolderButton>
-          </div>
-        </DialogModal>}
+        {displayFileDelete && (
+          <DialogModal open onClick={() => setDisplayFileDelete(false)}>
+            <div style={{ textAlign: "right" }}>
+              <DeleteFolderButton>
+                <CloseCircleOutlined
+                  onClick={() => {
+                    setDisplayDelete(false);
+                    setDisplayFileDelete(false);
+                    setDeleteChildName("");
+                  }}
+                />{" "}
+                Delete File?{" "}
+                <DeleteOutlined
+                  onClick={async () => {
+                    await DeleteFile(deleteChildName);
+                    setRefresh(!refresh);
+                    setDisplayDelete(false);
+                    setDisplayFileDelete(false);
+                  }}
+                />{" "}
+              </DeleteFolderButton>
+            </div>
+          </DialogModal>
+        )}
 
-        <h2 style={{ textAlign: "left", margin: "10px 20px", display: "inline" }}>{slicedParent}/</h2>
-        {!isShowGrid && <SpanButton onClick={() => setIsShowGrid(true)}><AppstoreOutlined /></SpanButton>}
-        {isShowGrid && <SpanButton onClick={() => setIsShowGrid(false)}><MenuOutlined /></SpanButton>}
+        <h2
+          style={{ textAlign: "left", margin: "10px 20px", display: "inline" }}
+        >
+          {slicedParent}/
+        </h2>
+        {!isShowGrid && (
+          <SpanButton onClick={() => setIsShowGrid(true)}>
+            <AppstoreOutlined />
+          </SpanButton>
+        )}
+        {isShowGrid && (
+          <SpanButton onClick={() => setIsShowGrid(false)}>
+            <MenuOutlined />
+          </SpanButton>
+        )}
       </header>
 
-
-
-      <GridViewUl $isShowGrid={isShowGrid} >
-
+      <GridViewUl $isShowGrid={isShowGrid}>
         {currentFolders.map((folder) => (
           <FolderLayout
             key={folder._id}
-            onClick={() => { setDisplayDelete(true); setDeleteChildName(folder.name); setDisplayFileDelete(false); }}
+            onClick={() => {
+              setDisplayDelete(true);
+              setDeleteChildName(folder.name);
+              setDisplayFileDelete(false);
+            }}
             onDoubleClick={() => {
               setaaa(!aaa);
               setDisplayDelete(false);
               navigate(`/${folder.name}`);
             }}
-            style={{ backgroundColor: (deleteChildName === folder.name) ? "#a5a5a5" : "" }}
+            style={{
+              backgroundColor: deleteChildName === folder.name ? "#a5a5a5" : "",
+            }}
           >
             {/* <li> */}
             <FolderOutlined /> {/* Folder Icon */}
@@ -266,17 +323,23 @@ function FolderListNew3() {
         ))}
 
         {currentFiles.map((file) => (
-
           <FileLayout
             key={file._id}
-            onClick={() => { setDeleteChildName(file.name); setDisplayDelete(false); setDisplayFileDelete(true) }}
-            onDoubleClick={() => { fetchFile(file.name, file.originalname) }}
-            style={{ backgroundColor: (deleteChildName === file.name) ? "#a5a5a5" : "" }}
+            onClick={() => {
+              setDeleteChildName(file.name);
+              setDisplayDelete(false);
+              setDisplayFileDelete(true);
+            }}
+            onDoubleClick={() => {
+              fetchFile(file.name, file.originalname);
+            }}
+            style={{
+              backgroundColor: deleteChildName === file.name ? "#a5a5a5" : "",
+            }}
           >
-            <FileOutlined /> <SpanButton>{file.originalname}</SpanButton></FileLayout>
+            <FileOutlined /> <SpanButton>{file.originalname}</SpanButton>
+          </FileLayout>
         ))}
-
-
       </GridViewUl>
     </>
   );

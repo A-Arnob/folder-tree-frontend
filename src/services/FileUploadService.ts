@@ -2,6 +2,7 @@
 import { axiosInstance } from "../api/axios";
 // import http from "../http-common";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const upload = (file: File, parent: string | undefined): Promise<any> => {
 
   if (parent == undefined) {
@@ -20,6 +21,7 @@ const upload = (file: File, parent: string | undefined): Promise<any> => {
   });
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getFiles = (): Promise<any> => {
   return axiosInstance.get("/files");
 };

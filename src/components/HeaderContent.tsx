@@ -114,8 +114,8 @@ const HeaderContent = () => {
         </Header>
       </Layout>
 
-      {isAddFolder && <AddFolder />}
-      {isAddFile && <FileUpload />}
+      {isAddFolder && <AddFolder setIsAddFolder={setIsAddFolder} />}
+      {isAddFile && <FileUpload setIsAddFile={setIsAddFile}/>}
     </>
 
   )

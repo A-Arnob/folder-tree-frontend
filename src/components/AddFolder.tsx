@@ -1,13 +1,13 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 import SendFolder from "./SendFolder";
 import "./AddFolder.css";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, Modal, Form, Input } from "antd";
+import { useParams } from "react-router-dom";
+import { Modal, Form, Input } from "antd";
 import { styled } from "styled-components";
-import FolderListNew3 from "./FolderListNew3";
 import { useRefreshContext } from "../context/refreshContext";
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SubmitButton = styled.button`
   color: white;
   margin: 10px 10px;
@@ -26,10 +26,14 @@ const SubmitButton = styled.button`
   }
 `;
 
+interface IsAddFolderType{
+  setIsAddFolder: React.Dispatch<React.SetStateAction<boolean>>
+}
+
 
 
 // const AddFolder = ({ ParentFolderName }: { ParentFolderName: string }) => {
-const AddFolder = () => {
+const AddFolder = ({setIsAddFolder}:IsAddFolderType) => {
   const {refresh,setRefresh} = useRefreshContext();
 
   const { parent } = useParams();
@@ -38,7 +42,6 @@ const AddFolder = () => {
   const [showForm, setShowForm] = useState(true);
   const [showOk, setShowOk] = useState(false);
   const [test, setTest] = useState(false);
-  const navigate = useNavigate();
 
   const [form] = Form.useForm();
   let ParentFolderName = parent;
@@ -68,6 +71,7 @@ const AddFolder = () => {
     // navigate(0);
     setTest(!test);
     setRefresh(!refresh);
+    setIsAddFolder(false);
 
     return;
 
