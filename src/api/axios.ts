@@ -1,5 +1,6 @@
 import axios, {  InternalAxiosRequestConfig } from "axios";
-import mem from "mem";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// import mem from "mem";
 
 export const axiosInstancePublic = axios.create({
   baseURL: "http://localhost:8080",
@@ -72,6 +73,7 @@ axiosInstance.interceptors.response.use(
       }
 
       if (err.response.status === 403 && err.response.data) {
+        window.location.pathname = "/";
         return Promise.reject(err.response.data);
       }
     }

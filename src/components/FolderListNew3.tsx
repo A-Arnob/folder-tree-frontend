@@ -39,6 +39,11 @@ const SpanButton = styled.button`
   background: none;
   font-size: 16px;
   font-weight: bolder;
+  width: fit-content;
+  overflow: hidden;
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
 
   &:hover {
     cursor: pointer;
@@ -67,10 +72,12 @@ const DeleteFolderButton = styled.button`
   }
 `;
 
-const FolderLayout = styled.li`
+const FolderLayout = styled.li<{ $isShowGrid: boolean }>`
   list-style-type: none;
   display: flex;
-  max-width: 10rem;
+  /* max-width: 10rem; */
+  width: ${({ $isShowGrid }) => ($isShowGrid ? "auto" : "fit-content")};
+  max-width: 250px;
   border: 1px solid;
   border-color: #757575;
   border-radius: 10px;
@@ -84,7 +91,6 @@ const FolderLayout = styled.li`
 `;
 
 const FileLayout = styled(FolderLayout)`
-  width: fit-content;
   border-color: #b4b4b4;
   border-radius: 4px;
 `;
@@ -110,11 +116,11 @@ const DialogModal = styled.dialog`
 const GridViewUl = styled.ul<{ $isShowGrid: boolean }>`
   display: ${({ $isShowGrid }) => ($isShowGrid ? "grid" : "list")};
   padding: 10px 40px;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-template-rows: repeat(2, 100px);
   grid-gap: 10px;
 
-  @media (min-width: 380px) {
+  /* @media (min-width: 380px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @media (min-width: 600px) {
@@ -125,7 +131,7 @@ const GridViewUl = styled.ul<{ $isShowGrid: boolean }>`
   }
   @media (min-width: 1080px) {
     grid-template-columns: repeat(5, 1fr);
-  }
+  } */
 `;
 
 function FolderListNew3() {
@@ -300,6 +306,7 @@ function FolderListNew3() {
       <GridViewUl $isShowGrid={isShowGrid}>
         {currentFolders.map((folder) => (
           <FolderLayout
+            $isShowGrid={isShowGrid}
             key={folder._id}
             onClick={() => {
               setDisplayDelete(true);
@@ -324,6 +331,7 @@ function FolderListNew3() {
 
         {currentFiles.map((file) => (
           <FileLayout
+            $isShowGrid={isShowGrid}
             key={file._id}
             onClick={() => {
               setDeleteChildName(file.name);

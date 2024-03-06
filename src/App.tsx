@@ -6,14 +6,9 @@ import SignUpHeader from "./components/SignUpHeader";
 // import { useAuth } from "./hooks/useAuth";
 import { AuthContextProvider } from "./context/AuthContext";
 import SignIn from "./components/SignIn";
-import {
-  RefreshContext,
-  RefreshContextProvider,
-} from "./context/refreshContext";
+import { RefreshContextProvider } from "./context/refreshContext";
 
 function App() {
-  // const { user, setUser } = useAuth();
-  // console.log("USER VALUE: .....  " + user)
 
   return (
     <>

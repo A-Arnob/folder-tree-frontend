@@ -28,7 +28,10 @@ const SignInService = (email: string, password: string) => {
             console.log(res.data);
             resolve(res.data)
         }).catch((err) => {
-            console.log(err);
+            if(err.response.status === 404){
+                alert("Log In With Valid email & Password!");
+            }
+            // console.log(err);
             reject(err);
         });
     })
