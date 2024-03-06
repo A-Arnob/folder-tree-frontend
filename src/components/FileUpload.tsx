@@ -48,6 +48,7 @@ const FileUpload = () => {
         setMessage(response.data.message);
         console.log(response.data.message);
         // return UploadService.getFiles();
+        navigate(0);
       })
       // .then((files) => {
       //   // setFileInfos(files.data);
@@ -62,7 +63,7 @@ const FileUpload = () => {
       });
     console.log("Helllllo");
     setCurrentFile(undefined);
-    navigate(0);
+    // navigate(0);
 
     // useEffect(() => {
     //   UploadService.getFiles().then((response) => {

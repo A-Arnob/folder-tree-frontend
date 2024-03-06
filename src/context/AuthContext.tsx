@@ -33,7 +33,8 @@ export const AuthContextProvider: React.FC<PropsWithChildren> = (props) => {
         if (signedUser) {
             const signedUserObject = JSON.parse(signedUser);
             setUser(signedUserObject);
-            axiosInstance.defaults.headers["x-access-token"] = signedUserObject.accessToken;
+           
+            // axiosInstance.defaults.headers.common["x-access-token"] = signedUserObject.accessToken;
             // nevigate("/mainroot");
         }
 

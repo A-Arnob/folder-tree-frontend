@@ -6,6 +6,10 @@ import SignUpHeader from "./components/SignUpHeader";
 // import { useAuth } from "./hooks/useAuth";
 import { AuthContextProvider } from "./context/AuthContext";
 import SignIn from "./components/SignIn";
+import {
+  RefreshContext,
+  RefreshContextProvider,
+} from "./context/refreshContext";
 
 function App() {
   // const { user, setUser } = useAuth();
@@ -13,27 +17,23 @@ function App() {
 
   return (
     <>
-
       <AuthContextProvider>
+        <RefreshContextProvider>
+          <Routes>
+            <Route path="/" element={<SignUpHeader />}></Route>
+            <Route path="/signin" element={<SignIn />} />
+          </Routes>
 
-        <Routes>
-          <Route path="/" element={<SignUpHeader />} ></Route>
-          <Route path="/signin" element={<SignIn/>}/>
-        </Routes>
+          <Routes>
+            <Route path="/mainroot" element={<HeaderContent />}></Route>
+            <Route path="/:parent" element={<HeaderContent />}></Route>
+          </Routes>
 
-        <Routes>
-          <Route path="/mainroot" element={<HeaderContent />}></Route>
-          <Route path="/:parent" element={<HeaderContent />}></Route>
-        </Routes>
-
-
-        <Routes>
-          <Route path="/mainroot" element={<FolderListNew3 />}></Route>
-          <Route path="/:parent" element={<FolderListNew3 />}></Route>
-        </Routes>
-
-
-
+          <Routes>
+            <Route path="/mainroot" element={<FolderListNew3 />}></Route>
+            <Route path="/:parent" element={<FolderListNew3 />}></Route>
+          </Routes>
+        </RefreshContextProvider>
       </AuthContextProvider>
     </>
   );

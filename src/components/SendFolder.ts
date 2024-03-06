@@ -24,11 +24,14 @@ async function SendFolder(post: Post) {
 
     try {
       // \uD83D\uDC47️ post the object to the server
+      console.log("helloooooo")
       const response = await axiosInstance.post<Post>(
         `/folders/addfolder`,
         post,
         {
-
+          headers:{
+            "Content-Type": "application/json"
+          }
         }
       );
 

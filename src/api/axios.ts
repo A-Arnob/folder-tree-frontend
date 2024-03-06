@@ -20,10 +20,11 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config): InternalAxiosRequestConfig => {
     const user = JSON.parse(localStorage.getItem("user") as string);
-    const accessToken = user.accessTOken;
+    const accessToken = user.accessToken;
     if(accessToken){
-      config.headers["x-access-token"] = accessToken
+      config.headers["x-access-token"] = accessToken;
     }
+    console.log("Sent Data into request: ",config);
     return config;
   },
   (error) => { 
@@ -38,6 +39,7 @@ axiosInstance.interceptors.response.use(
   },
   async (err) =>{
     const originalConfig = err.config;
+    console.log("Data into error:  ", err.config);
 
     if(err.response){
       if(err.response.status === 401 && !originalConfig._retry){
@@ -61,6 +63,7 @@ axiosInstance.interceptors.response.use(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch(_error: any){
           if(_error.response && _error.response.data){
+            console.log(_error.response.data);
             return Promise.reject(_error.response.data);
           }
           return Promise.reject(_error.response);
@@ -86,8 +89,8 @@ async function refreshTokenfn(){
   })
 }
 
-const maxAge = 10000;
+// const maxAge = 10000;
 
-const memorizedRefreshTokenFn = mem(refreshTokenfn, {
-  maxAge,
-});
+// const memorizedRefreshTokenFn = mem(refreshTokenfn, {
+//   maxAge,
+// });

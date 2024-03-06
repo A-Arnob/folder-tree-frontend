@@ -4,6 +4,8 @@ import "./AddFolder.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Modal, Form, Input } from "antd";
 import { styled } from "styled-components";
+import FolderListNew3 from "./FolderListNew3";
+import { useRefreshContext } from "../context/refreshContext";
 
 
 const SubmitButton = styled.button`
@@ -28,18 +30,21 @@ const SubmitButton = styled.button`
 
 // const AddFolder = ({ ParentFolderName }: { ParentFolderName: string }) => {
 const AddFolder = () => {
+  const {refresh,setRefresh} = useRefreshContext();
+
   const { parent } = useParams();
   const [nameRef, setNameRef] = useState("");
   const newFolder = { name: "test", parent: "" };
   const [showForm, setShowForm] = useState(true);
   const [showOk, setShowOk] = useState(false);
+  const [test, setTest] = useState(false);
   const navigate = useNavigate();
 
   const [form] = Form.useForm();
   let ParentFolderName = parent;
 
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     if (ParentFolderName == undefined) {
       ParentFolderName = "mainroot";
     }
@@ -56,11 +61,13 @@ const AddFolder = () => {
     newFolder.name = trimmedNameValue;
     newFolder.parent = ParentFolderName;
 
-    SendFolder(newFolder);
+    await SendFolder(newFolder);
     // console.log(newFolder);
 
 
-    navigate(0);
+    // navigate(0);
+    setTest(!test);
+    setRefresh(!refresh);
 
     return;
 
@@ -102,6 +109,8 @@ const AddFolder = () => {
           </div> */}
         </Form>
       </Modal>
+
+      
 
     </div>
   );

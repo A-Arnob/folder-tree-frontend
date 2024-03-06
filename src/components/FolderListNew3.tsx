@@ -8,6 +8,7 @@ import fetchFile from "./fetchFile";
 import DeleteFile from "./DeleteFile";
 import { useAuthContext } from "../context/AuthContext";
 import { axiosInstance } from "../api/axios";
+import { useRefreshContext } from "../context/refreshContext";
 
 interface Folder {
   _id: string;
@@ -132,6 +133,8 @@ grid-gap: 10px;
 
 
 function FolderListNew3() {
+  const {refresh, setRefresh} = useRefreshContext();
+
   const navigate = useNavigate();
   let { parent } = useParams();
   // const goBack = () => navigate(-1);
@@ -190,7 +193,7 @@ function FolderListNew3() {
     console.log("Into last of use effect....");
 
     return () => { controller.abort(); setDisplayDelete(false) }
-  }, [aaa, parent]);
+  }, [aaa, parent, refresh]);
 
   useEffect(() => {
     console.log("Calling get...");
@@ -211,7 +214,7 @@ function FolderListNew3() {
       });
 
     return () => { controller.abort(); setDisplayDelete(false) }
-  }, [aaa, parent]);
+  }, [aaa, parent, refresh]);
 
 
   const slicedParent = parent.slice(24);
@@ -225,13 +228,13 @@ function FolderListNew3() {
       <header style={{ display: "flex", justifyContent: 'space-between' }} onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }}>
         {displayDelete && <DialogModal open onClick={() => setDisplayDelete(false)} >
           <div style={{ textAlign: "right" }}>
-            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} />  Delete?  <DeleteOutlined onClick={() => { DeleteChild(deleteChildName); navigate(0) }} /></DeleteFolderButton>
+            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} />  Delete?  <DeleteOutlined onClick={async () => { await DeleteChild(deleteChildName); navigate(0) }} /></DeleteFolderButton>
           </div>
         </DialogModal>}
 
         {displayFileDelete && <DialogModal open onClick={() => setDisplayFileDelete(false)} >
           <div style={{ textAlign: "right" }}>
-            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} />  Delete File?  <DeleteOutlined onClick={() => { DeleteFile(deleteChildName); navigate(0) }} /> </DeleteFolderButton>
+            <DeleteFolderButton ><CloseCircleOutlined onClick={() => { setDisplayDelete(false); setDisplayFileDelete(false); setDeleteChildName(""); }} />  Delete File?  <DeleteOutlined onClick={async () => { await DeleteFile(deleteChildName); navigate(0) }} /> </DeleteFolderButton>
           </div>
         </DialogModal>}
 
