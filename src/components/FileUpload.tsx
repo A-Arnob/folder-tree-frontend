@@ -3,6 +3,7 @@ import UploadService from "../services/FileUploadService";
 import { Modal } from "antd";
 import { Layout } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import { useRefreshContext } from "../context/refreshContext";
 
 const { Header } = Layout;
 
@@ -26,6 +27,7 @@ interface IFile {
 
 const FileUpload = () => {
   let { parent } = useParams();
+  const {refresh, setRefresh} = useRefreshContext();
 
   const [currentFile, setCurrentFile] = useState<File>();
   const [showFileUpload, setShowFileUpload] = useState(true);
@@ -48,7 +50,8 @@ const FileUpload = () => {
         setMessage(response.data.message);
         console.log(response.data.message);
         // return UploadService.getFiles();
-        navigate(0);
+        // navigate(0);
+        setRefresh(!refresh);
       })
       // .then((files) => {
       //   // setFileInfos(files.data);

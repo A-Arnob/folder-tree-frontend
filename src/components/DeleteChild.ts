@@ -8,7 +8,11 @@ const DeleteChild = (name: string) => {
   // }, []);
 
   return new Promise<AxiosResponse<any>>((resolve, reject) => {
-    axiosInstance.post(`/folders/delete/${name}`, {}).then(
+    axiosInstance.post(`/folders/delete/${name}`, {
+      headers:{
+        "Content-Type": "application/json"
+      }
+    }).then(
       (response) => {
         console.log(response);
         resolve(response);

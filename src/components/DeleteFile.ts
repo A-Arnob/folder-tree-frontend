@@ -8,7 +8,11 @@ const DeleteFile = (name: string) => {
     // }, []);
 
     return new Promise<AxiosResponse<any>>((resolve, reject) => {
-        axiosInstance.post(`/file/delete/${name}`, {}).then(
+        axiosInstance.post(`/file/delete/${name}`, {
+            headers:{
+                "Content-Type": "application/json"
+              }
+        }).then(
             (response) => {
                 console.log(response);
                 resolve(response);
